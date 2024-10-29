@@ -1,0 +1,21 @@
+﻿@page "/"
+@using Project.Shared
+@inject HttpClient http
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+@code{
+
+    protected override async Task OnInitializedAsync()
+    {
+        var foo = await http.GetFromJsonAsync<IEnumerable<WeatherForecast>>("http://localhost:5242/weatherforecast/");
+        foreach (var test in foo)
+        {
+            Console.WriteLine(test.TemperatureC);
+        }
+    }
+
+}
