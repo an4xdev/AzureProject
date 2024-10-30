@@ -15,7 +15,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3f7ced9-e2a5-4d68-bd66-a7ad5339ed6f" name="Changes" comment="" />
+    <list default="true" id="a3f7ced9-e2a5-4d68-bd66-a7ad5339ed6f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Project.API/Services/SendOnTopic.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Client/Services/ReceiveOnTopic.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Client/Utils/Utils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Controllers/WeatherForecastController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Controllers/WeatherForecastController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Project.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Project.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Home.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Home.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Project.Client.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Project.Client.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/_Imports.razor" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,6 +39,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -240,8 +256,19 @@
       <option name="presentableId" value="Default" />
       <updated>1730223582887</updated>
       <workItem from="1730223583967" duration="1413000" />
-      <workItem from="1730233207874" duration="106000" />
+      <workItem from="1730233207874" duration="1002000" />
+      <workItem from="1730310525837" duration="2723000" />
+      <workItem from="1730313449347" duration="371000" />
     </task>
+    <task id="LOCAL-00001" summary="project skeleton with cors">
+      <option name="closed" value="true" />
+      <created>1730233576082</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1730233576082</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,5 +278,7 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="project skeleton with cors" />
+    <option name="LAST_COMMIT_MESSAGE" value="project skeleton with cors" />
   </component>
 </project>

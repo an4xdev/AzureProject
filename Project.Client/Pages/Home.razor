@@ -1,21 +1,105 @@
 ﻿@page "/"
-@using Project.Shared
-@inject HttpClient http
+@using Azure.Messaging.ServiceBus
+@using Project.Shared.DoNotGit
+@* @inject IReceiveOnTopic Rec *@
+@inject HttpClient Http
+
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h3>Service Bus Processor</h3>
+<button @onclick="StartProcessing">Start Processing</button>
+<button @onclick="SetSub">Change sub</button>
 
-Welcome to your new app.
+@if (isOne)
+{
+    <p>sub1</p>
+}
+else
+{
+    <p>sub2</p>
+}
+
+
+@if (receivedMessages.Any())
+{
+    <p>Count: @receivedMessages.Count()</p>
+    <h4>Received Messages:</h4>
+    <ul>
+        @foreach (var message in receivedMessages)
+        {
+        <li>@message</li>
+        }
+    </ul>
+}
 
 @code{
 
+    public void SetSub()
+    {
+        isOne = !isOne;
+    }
+
+    public bool isOne { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        var foo = await http.GetFromJsonAsync<IEnumerable<WeatherForecast>>("http://localhost:5242/weatherforecast/");
-        foreach (var test in foo)
+        Console.WriteLine("Before initialization");
+        // await Rec.Initialize();
+        Console.WriteLine("After initialization");
+        await Http.PostAsync($"{Utils.API_URL}/weatherforecast/topic", null);
+        // var foo = await http.GetFromJsonAsync<IEnumerable<WeatherForecast>>($"{Utils.API_URL}/weatherforecast/");
+        // foreach (var test in foo)
+        // {
+        //     Console.WriteLine(test.TemperatureC);
+        // }
+    }
+
+    private List<string> receivedMessages = new List<string>();
+
+    private ServiceBusClient _client;
+    private ServiceBusProcessor _processor;
+
+    private async Task StartProcessing()
+    {
+
+        var clientOptions = new ServiceBusClientOptions()
         {
-            Console.WriteLine(test.TemperatureC);
-        }
+            TransportType = ServiceBusTransportType.AmqpWebSockets
+        };
+        _client = new ServiceBusClient(DontCommit.Key, clientOptions);
+        _processor = _client.CreateProcessor("testtopic", isOne? "sub1": "sub2", new ServiceBusProcessorOptions());
+        _processor.ProcessMessageAsync += ProcessMessages;
+        _processor.ProcessErrorAsync += ErrorHandler;
+        await _processor.StartProcessingAsync();
+    }
+
+    private async Task ProcessMessages(ProcessMessageEventArgs args)
+    {
+        // Your message handling logic
+        var body = args.Message.Body.ToString();
+        Console.WriteLine($"Received message: {body}");
+
+        // Update the UI with the received message
+        await InvokeAsync(() =>
+        {
+            receivedMessages.Add(body);
+            StateHasChanged();
+        });
+
+
+        // Complete the message
+        await args.CompleteMessageAsync(args.Message);
+    }
+
+    private Task ErrorHandler(ProcessErrorEventArgs args)
+    {
+        // Your error handling logic
+        Console.WriteLine($"Error source: {args.Exception.Source}, Exception: {args.Exception.Message}");
+
+        // Log the error or take appropriate action
+
+        return Task.CompletedTask;
     }
 
 }
+

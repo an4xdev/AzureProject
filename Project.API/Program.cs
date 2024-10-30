@@ -1,3 +1,5 @@
+using Project.API.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +13,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("BlazorClientPolicy", build => build.AllowAnyOrigin());
 });
+
+builder.Services.AddSingleton<ISendOnTopic, SendOnTopic>();
 
 var app = builder.Build();
 
