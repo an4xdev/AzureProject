@@ -1,0 +1,53 @@
+﻿version: '3.8'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=P@ssword123!
+    ports:
+      - "1433:1433"
+    networks:
+      - project-network
+    volumes:
+      - sql_data:/var/opt/mssql
+    restart: always
+
+  project.api:
+    build:
+      context: .
+      dockerfile: Project.API/Dockerfile
+    ports:
+        - "8080:8080"
+    networks:
+        - project-network
+    depends_on:
+      - db
+    restart: always
+    environment:
+      - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
+    volumes:
+      - api_photos:/app/images
+
+  project.client:
+    build:
+      context: .
+      dockerfile: Project.Client/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - project-network
+    depends_on:
+      - project.api
+    restart: always
+
+networks:
+  project-network:
+    driver: bridge
+
+volumes:
+  sql_data:
+    driver: local
+  api_photos:
+    driver: local

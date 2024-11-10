@@ -2,5 +2,5 @@
 
 public class Utils
 {
-    public static string API_URL = "http://localhost:5242";
+    public static string API_URL = "http://localhost:8080";
 }
