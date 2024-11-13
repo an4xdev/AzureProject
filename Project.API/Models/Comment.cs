@@ -8,6 +8,8 @@ public class Comment
     [Key]
     public int Id { get; set; }
 
+    public string Value { get; set; }
+
     [ForeignKey("User")]
     public Guid UserId { get; set; }
 

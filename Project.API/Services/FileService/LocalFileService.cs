@@ -2,7 +2,7 @@
 
 namespace Project.API.Services.FileService;
 
-public class LocalFileService : IFileservice
+public class LocalFileService : IFileService
 {
     public async Task<string> Upload(string imageData, string fileName)
     {

@@ -16,5 +16,5 @@ public class PostEmote
     public Guid EmoteId { get; set; }
     public Emote Emote { get; set; }
 
-    public int Count { get; set; } = 0;
+    public int Count { get; set; }
 }

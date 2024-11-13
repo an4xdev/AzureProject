@@ -1,5 +1,6 @@
 using Project.API.Database;
 using Project.API.Services;
+using Project.API.Services.FileService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddSingleton<ISendOnTopic, SendOnTopic>();
+builder.Services.AddScoped<IFileService, LocalFileService>();
 
 var app = builder.Build();
 

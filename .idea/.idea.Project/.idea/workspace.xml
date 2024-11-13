@@ -17,34 +17,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3f7ced9-e2a5-4d68-bd66-a7ad5339ed6f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Project.API/Controllers/CommentController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Controllers/EmoteController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Controllers/PostController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Controllers/UserController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Database/AppDbContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Models/Comment.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Models/Emote.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Models/Post.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Models/PostEmote.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Models/User.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Services/FileService/AzureFileService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Services/FileService/IFileservice.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Services/FileService/LocalFileService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project.API/Utils/MimeHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/DTOs/CommentDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/DTOs/EmoteDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/DTOs/PostDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/DTOs/UserDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/Requests/AddCommentRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/Requests/AddPostRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/Requests/LoginRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/Requests/RegisterRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/Responses/BaseResponse.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/Responses/LoginResponse.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Shared/Responses/RegisterResponse.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Controllers/PostController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Controllers/PostController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Database/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Database/AppDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Models/Comment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Models/Comment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Models/Emote.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Models/Emote.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Models/Post.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Models/Post.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Models/PostEmote.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Models/PostEmote.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Models/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Project.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Project.API.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Layout/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Layout/MainLayout.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Home.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Home.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Project.Client.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Project.Client.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Utils/Utils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Utils/Utils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/_Imports.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/wwwroot/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/wwwroot/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Project.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Services/FileService/IFileservice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/FileService/IFileService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Services/FileService/LocalFileService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/FileService/LocalFileService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,25 +69,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Project.API: https.executor": "Run",
-    ".NET Launch Settings Profile.Project.Client: https.executor": "Run",
-    "Docker.Project.API/Dockerfile.executor": "Run",
-    "Docker.Project.Client/Dockerfile.executor": "Run",
-    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Project.API: https.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.Project.Client: https.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.Project.API/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.Project.Client/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
     <configuration name="Project.API: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Project.API/Project.API.csproj" />
@@ -352,7 +347,11 @@
       <workItem from="1730310525837" duration="2723000" />
       <workItem from="1730313449347" duration="371000" />
       <workItem from="1731241370045" duration="5855000" />
-      <workItem from="1731248330887" duration="13237000" />
+      <workItem from="1731248330887" duration="13360000" />
+      <workItem from="1731347125064" duration="26000" />
+      <workItem from="1731347165201" duration="1966000" />
+      <workItem from="1731527175351" duration="1471000" />
+      <workItem from="1731532358258" duration="3396000" />
     </task>
     <task id="LOCAL-00001" summary="project skeleton with cors">
       <option name="closed" value="true" />
@@ -362,7 +361,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730233576082</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add docker, nuget packages, db schema in models, controllers templates">
+      <option name="closed" value="true" />
+      <created>1731263338708</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731263338708</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -373,6 +380,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="project skeleton with cors" />
-    <option name="LAST_COMMIT_MESSAGE" value="project skeleton with cors" />
+    <MESSAGE value="add docker, nuget packages, db schema in models, controllers templates" />
+    <option name="LAST_COMMIT_MESSAGE" value="add docker, nuget packages, db schema in models, controllers templates" />
   </component>
 </project>

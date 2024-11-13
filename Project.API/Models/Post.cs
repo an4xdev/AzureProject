@@ -12,6 +12,10 @@ public class Post
 
     public required string PhotoPath { get; set; }
 
+    public required string PhotoName { get; set; }
+
+    public required string PhotoExtension { get; set; }
+
     public int Likes { get; set; }
 
     [ForeignKey("User")]
