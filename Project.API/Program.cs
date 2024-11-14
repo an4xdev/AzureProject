@@ -20,6 +20,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSingleton<ISendOnTopic, SendOnTopic>();
 builder.Services.AddScoped<IFileService, LocalFileService>();
+builder.Services.AddScoped<IPostService, PostService>();
 
 var app = builder.Build();
 

@@ -31,9 +31,9 @@ public class UserController(AppDbContext context) : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<RegisterResponse> Register(RegisterRequest request)
+    public async Task<BaseResponse> Register(RegisterRequest request)
     {
-        RegisterResponse response = new();
+        BaseResponse response = new();
         var user = await context.Users.Where(u => u.Email == request.Email).FirstOrDefaultAsync();
         if (user != null)
         {

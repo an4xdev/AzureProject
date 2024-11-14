@@ -10,11 +10,16 @@ public class PostEmote
 
     [ForeignKey("Post")]
     public Guid PostId { get; set; }
-    public Post Post { get; set; }
+    public Post Post { get; set; } = default!;
 
     [ForeignKey("Emote")]
     public Guid EmoteId { get; set; }
-    public Emote Emote { get; set; }
 
-    public int Count { get; set; }
+    public Emote Emote { get; set; } = default!;
+
+    [ForeignKey("User")]
+    public Guid UserId { get; set; }
+
+    public User User { get; set; } = default!;
+
 }

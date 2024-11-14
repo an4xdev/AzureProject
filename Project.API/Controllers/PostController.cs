@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Project.API.Database;
 using Project.API.Models;
 using Project.API.Services;
@@ -13,7 +12,7 @@ namespace Project.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PostController(AppDbContext context, IFileService fileService, ISendOnTopic _sendOnTopic) : ControllerBase
+public class PostController(AppDbContext context, IFileService fileService, IPostService postService,ISendOnTopic _sendOnTopic) : ControllerBase
 {
     [HttpPost]
     public async Task<BaseResponse> AddPost(AddPostRequest request)
@@ -43,22 +42,6 @@ public class PostController(AppDbContext context, IFileService fileService, ISen
 
         await context.SaveChangesAsync();
 
-        var emotes = await context.Emotes.ToListAsync();
-
-        emotes.ForEach(e =>
-        {
-            context.PostEmotes.Add(new PostEmote()
-            {
-                Count = 0,
-                Emote = e,
-                EmoteId = e.Id,
-                Post = post,
-                PostId = post.Id
-            });
-        });
-
-        await context.SaveChangesAsync();
-
         response.IsSuccessful = true;
 
         return await Task.FromResult(response);
@@ -71,43 +54,36 @@ public class PostController(AppDbContext context, IFileService fileService, ISen
 
         var posts = await context.Posts.ToListAsync();
 
-        posts.ForEach(Action);
+        foreach (var p in posts)
+        {
+            var post = await postService.GetPostById(p.Id);
+            if (post != null)
+            {
+                response.Add(post);
+            }
+        }
 
         return await Task.FromResult(response);
 
-        async void Action(Post p)
-        {
-            var comments = await context.Comments.Where(c => c.PostId == p.Id).Select(c =>new CommentDto()
-            {
-                Value = c.Value,
-                User = new UserDto()
-                {
-                    Id = c.UserId,
-                    UserName = c.User.Name
-                }
-            }).ToListAsync();
-
-            // TODO: think about specific emote and user corealtion
-            var emotes = await context.PostEmotes.Where(pe => pe.PostId == p.Id).Select(pe => new EmoteDto()
-            {
-                Id = pe.EmoteId,
-                // User = pe.
-            }).ToListAsync();
-
-            var pDto = new PostDto()
-            {
-                Id = p.Id,
-                // TODO: get photo data from service
-                PhotoData = "",
-                Likes = p.Likes,
-            };
-        }
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<int> GetUserPosts(Guid id)
+    [HttpGet("{userId:guid}")]
+    public async Task<List<PostDto>> GetUserPosts(Guid userId)
     {
-        return await Task.FromResult(1);
+        List<PostDto> response = [];
+
+        var posts = await context.Posts.Where(p => p.UserId == userId).ToListAsync();
+
+        foreach (var p in posts)
+        {
+            var post = await postService.GetPostById(p.Id);
+            if (post != null)
+            {
+                response.Add(post);
+            }
+        }
+
+        return await Task.FromResult(response);
     }
 
     [HttpPut]
@@ -117,8 +93,25 @@ public class PostController(AppDbContext context, IFileService fileService, ISen
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task<int> DeletePost(Guid id)
+    public async Task<BaseResponse> DeletePost(Guid id)
     {
-        return await Task.FromResult(1);
+        BaseResponse response = new();
+
+        var post = await context.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
+
+        if (post == null)
+        {
+            response.IsSuccessful = false;
+            response.Message = "Unknown post to delete.";
+            return await Task.FromResult(response);
+        }
+
+        context.Posts.Remove(post);
+
+        await context.SaveChangesAsync();
+
+        response.IsSuccessful = true;
+
+        return await Task.FromResult(response);
     }
 }

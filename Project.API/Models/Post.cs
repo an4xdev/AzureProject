@@ -21,7 +21,7 @@ public class Post
     [ForeignKey("User")]
     public Guid UserId { get; set; }
 
-    public User User { get; set; }
+    public User User { get; set; } = default!;
 
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 

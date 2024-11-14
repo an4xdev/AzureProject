@@ -13,10 +13,10 @@ public class Comment
     [ForeignKey("User")]
     public Guid UserId { get; set; }
 
-    public User User { get; set; }
+    public User User { get; set; } = default!;
 
     [ForeignKey("Post")]
     public Guid PostId { get; set; }
 
-    public Post Post { get; set; }
+    public Post Post { get; set; } = default!;
 }
