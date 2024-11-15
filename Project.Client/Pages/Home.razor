@@ -1,203 +1,36 @@
 ﻿@page "/"
-@using Azure.Messaging.ServiceBus
-@using Project.Shared.DoNotGit
-@* @inject IReceiveOnTopic Rec *@
 @inject HttpClient Http
 
 <PageTitle>Home</PageTitle>
 
-<h3>Service Bus Processor</h3>
-<button @onclick="StartProcessing">Start Processing</button>
-<button @onclick="SetSub">Change sub</button>
+<CheckLogged/>
 
-@if (isOne)
+@if (_posts == null)
 {
-    <p>sub1</p>
+    <MudText>Loading posts</MudText>
 }
 else
 {
-    <p>sub2</p>
-}
-
-
-@if (receivedMessages.Any())
-{
-    <p>Count: @receivedMessages.Count()</p>
-    <h4>Received Messages:</h4>
-    <ul>
-        @foreach (var message in receivedMessages)
-        {
-        <li>@message</li>
-        }
-    </ul>
-}
-
-<p>@emoji</p>
-
-<MudContainer Class="mt-16">
-    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Pricing</MudText>
-    <MudText Align="Align.Center">Some long pricing text should go here maybe? who knows what text you would want here, i guess i cant fill it in for you.</MudText>
-    <MudGrid Class="mt-8">
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard Elevation="25" Class="rounded-lg pb-4">
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h5" Align="Align.Center">Beginner</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-                    <div class="d-flex justify-center">
-                        <MudText Typo="Typo.h3">$5</MudText>
-                        <MudText Typo="Typo.h5" Class="ml-1 mt-5" Color="Color.Secondary">/Monthly</MudText>
-                    </div>
-                    <MudList T="string" Class="mx-auto mt-4" Style="width:300px;">
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            Unlimited something
-                        </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            10 something
-                        </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            No something
-                        </MudListItem>
-                    </MudList>
-                </MudCardContent>
-                <MudCardActions Class="d-flex justify-center">
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;">Start Now</MudButton>
-                </MudCardActions>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard Elevation="25" Class="rounded-lg pb-4">
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h5" Align="Align.Center">Starter</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-                    <div class="d-flex justify-center">
-                        <MudText Typo="Typo.h3">$10</MudText>
-                        <MudText Typo="Typo.h5" Class="ml-1 mt-5" Color="Color.Secondary">/Monthly</MudText>
-                    </div>
-                    <MudList T="string" Class="mx-auto mt-4" Style="width:300px;">
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            Unlimited something
-                        </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            10 something
-                        </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            No something
-                        </MudListItem>
-                    </MudList>
-                </MudCardContent>
-                <MudCardActions Class="d-flex justify-center">
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;">Start Now</MudButton>
-                </MudCardActions>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="4">
-            <MudCard Elevation="25" Class="rounded-lg pb-4">
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h5" Align="Align.Center">Professional</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-                    <div class="d-flex justify-center">
-                        <MudText Typo="Typo.h3">$15</MudText>
-                        <MudText Typo="Typo.h5" Class="ml-1 mt-5" Color="Color.Secondary">/Monthly</MudText>
-                    </div>
-                    <MudList T="string" Class="mx-auto mt-4" Style="width:300px;">
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            Unlimited something
-                        </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            10 something
-                        </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            No something
-                        </MudListItem>
-                    </MudList>
-                </MudCardContent>
-                <MudCardActions Class="d-flex justify-center">
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;">Start Now</MudButton>
-                </MudCardActions>
-            </MudCard>
-        </MudItem>
-    </MudGrid>
-</MudContainer>
-
-@code{
-
-    private string emoji = "❤️";
-
-    public void SetSub()
+    if (_posts.Count == 0)
     {
-        isOne = !isOne;
+        <MudText>No posts, add some maybe?</MudText>
     }
+    else
+    {
+        foreach (var postDto in _posts)
+        {
+            <Post PostDto="postDto"/>
+        }
+    }
+}
 
-    public bool isOne { get; set; }
+@code {
+
+    List<PostDto>? _posts = null;
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("Before initialization");
-        // await Rec.Initialize();
-        Console.WriteLine("After initialization");
-        // await Http.PostAsync($"{Utils.API_URL}/weatherforecast/topic", null);
-        var foo = await Http.GetFromJsonAsync<IEnumerable<WeatherForecast>>($"{Utils.API_URL}/weatherforecast");
-        foreach (var test in foo)
-        {
-            Console.WriteLine(test.TemperatureC);
-        }
-    }
-
-    private List<string> receivedMessages = new List<string>();
-
-    private ServiceBusClient _client;
-    private ServiceBusProcessor _processor;
-
-    private async Task StartProcessing()
-    {
-
-        var clientOptions = new ServiceBusClientOptions()
-        {
-            TransportType = ServiceBusTransportType.AmqpWebSockets
-        };
-        _client = new ServiceBusClient(DontCommit.Key, clientOptions);
-        _processor = _client.CreateProcessor("testtopic", isOne? "sub1": "sub2", new ServiceBusProcessorOptions());
-        _processor.ProcessMessageAsync += ProcessMessages;
-        _processor.ProcessErrorAsync += ErrorHandler;
-        await _processor.StartProcessingAsync();
-    }
-
-    private async Task ProcessMessages(ProcessMessageEventArgs args)
-    {
-        // Your message handling logic
-        var body = args.Message.Body.ToString();
-        Console.WriteLine($"Received message: {body}");
-
-        // Update the UI with the received message
-        await InvokeAsync(() =>
-        {
-            receivedMessages.Add(body);
-            StateHasChanged();
-        });
-
-
-        // Complete the message
-        await args.CompleteMessageAsync(args.Message);
-    }
-
-    private Task ErrorHandler(ProcessErrorEventArgs args)
-    {
-        // Your error handling logic
-        Console.WriteLine($"Error source: {args.Exception.Source}, Exception: {args.Exception.Message}");
-
-        // Log the error or take appropriate action
-
-        return Task.CompletedTask;
+        _posts = await Http.GetFromJsonAsync<List<PostDto>>("X") ?? [];
     }
 
 }
-

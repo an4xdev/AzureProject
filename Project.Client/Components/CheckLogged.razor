@@ -1,0 +1,13 @@
+﻿@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        if (!await LocalStorage.ContainKeyAsync("user"))
+        {
+            NavigationManager.NavigateTo("/Login");
+        }
+    }
+
+}

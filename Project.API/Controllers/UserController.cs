@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Project.API.Services.UserService;
-using Project.Shared.DTOs;
+using Project.Shared.Requests;
 using Project.Shared.Responses;
-using RegisterRequest = Project.Shared.DTOs.RegisterRequest;
+using RegisterRequest = Project.Shared.Requests.RegisterRequest;
 
 namespace Project.API.Controllers;
 

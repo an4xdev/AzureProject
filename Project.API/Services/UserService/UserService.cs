@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.API.Database;
-using Project.Shared.DTOs;
+using Project.Shared.Requests;
 using Project.Shared.Responses;
 
 namespace Project.API.Services.UserService;

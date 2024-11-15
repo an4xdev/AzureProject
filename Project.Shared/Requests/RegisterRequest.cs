@@ -1,4 +1,4 @@
-﻿namespace Project.Shared.DTOs;
+﻿namespace Project.Shared.Requests;
 
 public class RegisterRequest
 {
