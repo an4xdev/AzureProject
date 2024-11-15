@@ -1,6 +1,10 @@
 using Project.API.Database;
 using Project.API.Services;
+using Project.API.Services.Comment;
+using Project.API.Services.EmoteService;
 using Project.API.Services.FileService;
+using Project.API.Services.PostService;
+using Project.API.Services.UserService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +25,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddSingleton<ISendOnTopic, SendOnTopic>();
 builder.Services.AddScoped<IFileService, LocalFileService>();
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IEmoteService, EmoteService>();
 
 var app = builder.Build();
+
+// TODO: move to minimal API?
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -37,7 +46,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-
 
 app.Run();

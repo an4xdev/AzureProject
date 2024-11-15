@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Project.API.Database;
-using Project.API.Services.FileService;
+﻿using Microsoft.AspNetCore.Mvc;
+using Project.API.Services.UserService;
+using Project.Shared.DTOs;
 using Project.Shared.Responses;
 using RegisterRequest = Project.Shared.DTOs.RegisterRequest;
 
@@ -10,39 +8,19 @@ namespace Project.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UserController(AppDbContext context) : ControllerBase
+public class UserController(IUserService userService) : ControllerBase
 {
     [HttpPost("login")]
     public async Task<LoginResponse> Login(LoginRequest request)
     {
-        LoginResponse response = new();
-        var user = await context.Users.Where(u => u.Email == request.Email &&  u.Password == request.Password)
-            .FirstOrDefaultAsync();
-        if (user == null)
-        {
-            response.IsSuccessful = false;
-            response.Message = "No user in system with that credentials";
-            return await Task.FromResult(response);
-
-        }
-        response.IsSuccessful = true;
-        response.UserId = user.Id;
+        var response = await userService.Login(request);
         return await Task.FromResult(response);
     }
 
     [HttpPost("register")]
     public async Task<BaseResponse> Register(RegisterRequest request)
     {
-        BaseResponse response = new();
-        var user = await context.Users.Where(u => u.Email == request.Email).FirstOrDefaultAsync();
-        if (user != null)
-        {
-            response.IsSuccessful = false;
-            response.Message = "In system already exists user with provided email.";
-            return await Task.FromResult(response);
-        }
-
-        response.IsSuccessful = true;
+        var response = await userService.Register(request);
         return await Task.FromResult(response);
     }
 }

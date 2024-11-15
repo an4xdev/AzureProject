@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Project.API.Database;
+using Project.API.Services.Comment;
+using Project.Shared.Requests;
+using Project.Shared.Responses;
 
 namespace Project.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CommentController(AppDbContext _context) : ControllerBase
+public class CommentController(ICommentService commentService) : ControllerBase
 {
     [HttpGet("{id:guid}")]
     public async Task<int> GetCommentsByPost(Guid id)
@@ -14,8 +16,9 @@ public class CommentController(AppDbContext _context) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<int> AddComment()
+    public async Task<BaseResponse> AddComment(AddCommentRequest request)
     {
-        return await Task.FromResult(1);
+        var response = await commentService.AddComment(request);
+        return await Task.FromResult(response);
     }
 }

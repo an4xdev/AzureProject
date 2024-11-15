@@ -1,6 +1,6 @@
 ﻿namespace Project.Shared.Requests;
 
-public class AddPostRequest
+public class PostRequest
 {
     public Guid? Id { get; set; }
 
