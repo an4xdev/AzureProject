@@ -1,4 +1,16 @@
-﻿
+﻿<MudCard>
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudAvatar Color="Color.Secondary">I</MudAvatar>
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudText Typo="Typo.body1">User</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText Typo="Typo.body2">COMMENT.</MudText>
+    </MudCardContent>
+</MudCard>
 @code {
     [Parameter]
     public required CommentDto CommentDto { get; set; }

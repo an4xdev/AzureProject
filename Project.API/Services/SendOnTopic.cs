@@ -28,7 +28,7 @@ public class SendOnTopic : ISendOnTopic
             {
                 TransportType = ServiceBusTransportType.AmqpWebSockets
             };
-            _client = new ServiceBusClient(DontCommit.Key, clientOptions);
+            _client = new ServiceBusClient(DontCommit.TopicKey, clientOptions);
             _sender = _client.CreateSender("testtopic");
         }
     }

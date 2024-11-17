@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.API.Database;
+using Project.Shared.DTOs;
 using Project.Shared.Requests;
 using Project.Shared.Responses;
 
@@ -7,17 +8,12 @@ namespace Project.API.Services.Comment;
 
 public interface ICommentService
 {
-    public Task<int> GetCommentsByPost(Guid id);
     public Task<BaseResponse> AddComment(AddCommentRequest request);
+    public Task<List<CommentDto>> GetCommentsByPostId(Guid postId);
 }
 
 public class CommentService(AppDbContext context) : ICommentService
 {
-    public async Task<int> GetCommentsByPost(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<BaseResponse> AddComment(AddCommentRequest request)
     {
         BaseResponse response = new();
@@ -55,5 +51,20 @@ public class CommentService(AppDbContext context) : ICommentService
 
         response.IsSuccessful = true;
         return await Task.FromResult(response);
+    }
+
+    public async Task<List<CommentDto>> GetCommentsByPostId(Guid postId)
+    {
+        var comments = await context.Comments.Where(c => c.PostId == postId).Select(c => new CommentDto
+        {
+            Value = c.Value,
+            User = new UserDto
+            {
+                Id = c.UserId,
+                UserName = c.User.Name
+            }
+        }).ToListAsync();
+
+        return await Task.FromResult(comments);
     }
 }

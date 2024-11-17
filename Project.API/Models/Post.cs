@@ -10,11 +10,7 @@ public class Post
 
     public string? Description { get; set; }
 
-    public required string PhotoPath { get; set; }
-
-    public required string PhotoName { get; set; }
-
-    public required string PhotoExtension { get; set; }
+    public string PhotoPath { get; set; }
 
     public int Likes { get; set; }
 

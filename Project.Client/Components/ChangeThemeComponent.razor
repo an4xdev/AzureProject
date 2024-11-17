@@ -1,0 +1,17 @@
+﻿@inject EventAggregator EventAggregator
+
+<MudToggleIconButton
+                     Icon="@Icons.Material.Filled.LightMode"
+                     Color="@Color.Error"
+                     ToggledIcon="@Icons.Material.Filled.DarkMode"
+                     ToggledColor="@Color.Success"
+                     ToggledChanged="OnToggledChanged"/>
+@code {
+    public bool ToggleTheme { get; set; } = true;
+
+    public void OnToggledChanged(bool toggled)
+    {
+        ToggleTheme = toggled;
+        EventAggregator.Publish("theme");
+    }
+}

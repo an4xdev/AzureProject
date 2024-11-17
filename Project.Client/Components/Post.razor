@@ -1,5 +1,6 @@
-﻿@* based on: https://www.mudblazor.com/components/card#combined *@
-
+﻿
+@inject IDialogService DialogService
+@* based on: https://www.mudblazor.com/components/card#combined *@
 <MudCard>
     <MudCardHeader>
         <CardHeaderAvatar>
@@ -10,17 +11,55 @@
             <MudText Typo="Typo.body2">Peninsula in Europe</MudText>
         </CardHeaderContent>
     </MudCardHeader>
-    <MudCardMedia Image="images/pilars.jpg" Height="250" />
+    @* photo uploaded to azure storage, got from: https://picsum.photos/ *@
+    <MudCardMedia Image="https://anax.blob.core.windows.net/test/24d738d3-3da9-4e7d-a992-0d5dbb916415.png"
+                  Height="250"/>
     <MudCardContent>
         <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText>
     </MudCardContent>
     <MudCardActions>
-        <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
-        <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+        <MudContainer Class="justify-content-around">
+            @* TODO: emotes from db *@
+            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
+                <MudButton>❤️</MudButton>
+            </MudBadge>
+            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
+                <MudButton>😊</MudButton>
+            </MudBadge>
+            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
+                <MudButton>🤣</MudButton>
+            </MudBadge>
+            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
+                <MudButton>😍</MudButton>
+            </MudBadge>
+            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
+                <MudButton>👍</MudButton>
+            </MudBadge>
+        </MudContainer>
     </MudCardActions>
+    @if (ShowPlus)
+    {
+        <MudContainer Class="text-center">
+            <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Default" OnClick="ShowPostWithComments"/>
+        </MudContainer>
+    }
 </MudCard>
 
 @code {
-    [Parameter]
-    public required PostDto PostDto { get; set; }
+    [Parameter] public required PostDto PostDto { get; set; }
+    [Parameter] public required bool ShowPlus { get; set; }
+
+    private readonly DialogOptions _dialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center, CloseOnEscapeKey = true };
+
+    private async Task ShowPostWithComments()
+    {
+        var parameters = new DialogParameters<PostDialog>
+        {
+            { x => x.PostDto, PostDto },
+            { x => x.ShowPlus, false }
+        };
+
+        await DialogService.ShowAsync<PostDialog>("", parameters, _dialogOptions);
+    }
+
 }

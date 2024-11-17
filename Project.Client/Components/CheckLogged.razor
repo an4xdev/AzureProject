@@ -4,6 +4,8 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
+        // TODO: remove after layout testing
+        await LocalStorage.SetItemAsync("user", "AAA");
         if (!await LocalStorage.ContainKeyAsync("user"))
         {
             NavigationManager.NavigateTo("/Login");

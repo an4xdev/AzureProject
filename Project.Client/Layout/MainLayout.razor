@@ -1,26 +1,41 @@
-﻿@* Required *@
-<MudThemeProvider />
+﻿@inherits LayoutComponentBase
+@inject EventAggregator EventAggregator
+
+@* Required *@
+<MudThemeProvider IsDarkMode="IsDarkMode"/>
 <MudPopoverProvider />
 
 @* Needed for dialogs *@
-<MudDialogProvider />
+<MudDialogProvider/>
 
 @* Needed for snackbars *@
 <MudSnackbarProvider />
 
-@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
+<MudLayout>
+    <MudAppBar Fixed="true" Elevation="1">
         <NavMenu/>
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+    </MudAppBar>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
             @Body
-        </article>
-    </main>
-</div>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code
+{
+    public bool IsDarkMode { get; set; } = true;
+
+    protected override Task OnInitializedAsync()
+    {
+        EventAggregator.Subscribe("theme", ThemeToggled);
+        return base.OnInitializedAsync();
+    }
+
+    private Task ThemeToggled()
+    {
+        IsDarkMode = !IsDarkMode;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+}

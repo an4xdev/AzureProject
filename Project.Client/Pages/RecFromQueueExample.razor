@@ -56,7 +56,7 @@ else
         {
             TransportType = ServiceBusTransportType.AmqpWebSockets
         };
-        _client = new ServiceBusClient(DontCommit.Key, clientOptions);
+        _client = new ServiceBusClient(DontCommit.TopicKey, clientOptions);
         _processor = _client.CreateProcessor("testtopic", isOne? "sub1": "sub2", new ServiceBusProcessorOptions());
         _processor.ProcessMessageAsync += ProcessMessages;
         _processor.ProcessErrorAsync += ErrorHandler;

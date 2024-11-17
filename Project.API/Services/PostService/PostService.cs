@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.API.Database;
 using Project.API.Models;
+using Project.API.Services.Comment;
+using Project.API.Services.EmoteService;
 using Project.API.Services.FileService;
 using Project.Shared.DTOs;
 using Project.Shared.Requests;
@@ -18,7 +20,7 @@ public interface IPostService
     public Task<BaseResponse> DeletePost(Guid id);
 }
 
-public class PostService(AppDbContext context, IFileService fileService, ISendOnTopic sendOnTopic) : IPostService
+public class PostService(AppDbContext context, ICommentService commentService, IEmoteService emoteService,IFileService fileService, ISendOnTopic sendOnTopic) : IPostService
 {
     public async Task<PostDto?> GetPostById(Guid postId)
     {
@@ -29,51 +31,14 @@ public class PostService(AppDbContext context, IFileService fileService, ISendOn
             return null;
         }
 
-        /* ------------------------------------------------------------------------------------ */
-        // TODO: move to service implementation
+        var comments = await commentService.GetCommentsByPostId(p.Id);
 
-        var comments = await context.Comments.Where(c => c.PostId == p.Id).Select(c => new CommentDto()
-        {
-            Value = c.Value,
-            User = new UserDto
-            {
-                Id = c.UserId,
-                UserName = c.User.Name
-            }
-        }).ToListAsync();
-
-        List<EmoteDto> emotes = [];
-
-        await context.Emotes.ForEachAsync(async void (e) =>
-        {
-            var count =
-                context
-                    .PostEmotes
-                    .Count(pe => pe.PostId == p.Id && pe.EmoteId == e.Id);
-
-            var users = await
-                context
-                    .PostEmotes
-                    .Where(pe => pe.EmoteId == e.Id && pe.PostId == p.Id)
-                    .Select(pe => pe.UserId)
-                    .ToListAsync();
-
-            emotes.Add(new EmoteDto()
-            {
-                Value = e.Emoji,
-                Count = count,
-                UserIds = users
-            });
-        });
-
-        /* ------------------------------------------------------------------------------------ */
-
-        var photoData = await fileService.Get(p.PhotoName);
+        var emotes = await emoteService.GetEmotesByPostId(p.Id);
 
         return await Task.FromResult(new PostDto
         {
             Id = p.Id,
-            PhotoData = photoData,
+            PhotoData = p.PhotoPath,
             Likes = p.Likes,
             Emotes = emotes,
             Comments = comments,
@@ -110,14 +75,12 @@ public class PostService(AppDbContext context, IFileService fileService, ISendOn
             return await Task.FromResult(response);
         }
 
-        var path = await fileService.Upload(request.PhotoData, request.PhotoName);
+        var path = await fileService.Upload(request.PhotoData, request.PhotoExtension);
         var post = new Post
         {
             Description = request.Description,
             Likes = 0,
             PhotoPath = path,
-            PhotoName = request.PhotoName,
-            PhotoExtension = request.PhotoExtension,
             User = user,
             UserId = user.Id
         };
@@ -128,6 +91,7 @@ public class PostService(AppDbContext context, IFileService fileService, ISendOn
 
         response.IsSuccessful = true;
 
+        // TODO: send message on topic
         // await sendOnTopic.SendMessage("FOO");
 
         return await Task.FromResult(response);
@@ -173,7 +137,7 @@ public class PostService(AppDbContext context, IFileService fileService, ISendOn
 
         post.Description = request.Description;
 
-        // TODO: think about photo uploads
+        await fileService.Replace("", request.PhotoData);
 
         context.Posts.Update(post);
 

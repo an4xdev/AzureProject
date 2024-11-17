@@ -7,9 +7,7 @@ public class PostRequest
     public string Description { get; set; }
 
     public string PhotoData { get; set; }
-
-    public string PhotoName { get; set; }
-
+    
     public string PhotoExtension { get; set; }
 
     public Guid UserId { get; set; }

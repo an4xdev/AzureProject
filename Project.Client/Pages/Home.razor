@@ -1,9 +1,15 @@
 ﻿@page "/"
 @inject HttpClient Http
-
 <PageTitle>Home</PageTitle>
 
 <CheckLogged/>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="py-4">
+    <Post ShowPlus="true"/>
+    <Post ShowPlus="true"/>
+    <Post ShowPlus="true"/>
+    <Post ShowPlus="true"/>
+</MudContainer>
 
 @if (_posts == null)
 {
@@ -26,11 +32,13 @@ else
 
 @code {
 
+
     List<PostDto>? _posts = null;
 
     protected override async Task OnInitializedAsync()
     {
-        _posts = await Http.GetFromJsonAsync<List<PostDto>>("X") ?? [];
+        // _posts = await Http.GetFromJsonAsync<List<PostDto>>("X") ?? [];
+        _posts = [];
     }
 
 }

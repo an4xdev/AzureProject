@@ -1,0 +1,19 @@
+﻿<MudDialog>
+    <DialogContent>
+        <Post ShowPlus="ShowPlus"/>
+        <Comment/>
+        <Comment/>
+        <Comment/>
+        <Comment/>
+        <Comment/>
+    </DialogContent>
+</MudDialog>
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public PostDto PostDto { get; set; }
+    [Parameter]
+    public required bool ShowPlus { get; set; }
+}
