@@ -1,0 +1,131 @@
+﻿@page "/Form"
+
+<CheckLogged/>
+
+@inject HttpClient Http
+@inject ICurrentUser CurrentUser
+@inject ISnackbar Snackbar
+
+<PageTitle>Add new post</PageTitle>
+
+@* got from: https://www.mudblazor.com/components/fileupload#custom-scenario *@
+
+<MudContainer>
+    <MudTextField @bind-Value="_request.Description" Label="Description" T="string"
+                  InputType="InputType.Text"></MudTextField>
+    <MudStack Style="width: 100%">
+        <MudFileUpload T="IBrowserFile"
+                       @ref="@_fileUpload"
+                       OnFilesChanged="OnInputFileChanged"
+                       Hidden="@false"
+                       InputClass="absolute mud-width-full mud-height-full overflow-hidden z-10"
+                       InputStyle="opacity:0"
+                       Accept=".png, .jpg"
+                       tabindex="-1"
+                       @ondrop="@ClearDragClass"
+                       @ondragenter="@SetDragClass"
+                       @ondragleave="@ClearDragClass"
+                       @ondragend="@ClearDragClass">
+            <ActivatorContent>
+                <MudPaper Height="300px"
+                          Outlined="true"
+                          Class="@_dragClass">
+                    <MudText Typo="Typo.h6">
+                        Drag and drop file here or click
+                    </MudText>
+                    @if (_fileName != string.Empty)
+                    {
+                        <MudChip T="string"
+                                 Color="Color.Dark"
+                                 Text="@_fileName"
+                                 tabindex="-1"/>
+                    }
+                </MudPaper>
+            </ActivatorContent>
+        </MudFileUpload>
+        <MudToolBar Gutters="@false"
+                    Class="relative d-flex justify-end gap-4">
+            <MudButton Color="Color.Primary"
+                       OnClick="@OpenFilePickerAsync"
+                       Variant="Variant.Filled">
+                Open file picker
+            </MudButton>
+            <MudButton Color="Color.Error"
+                       Disabled="@(_fileName != string.Empty)"
+                       OnClick="@ClearAsync"
+                       Variant="Variant.Filled">
+                Clear
+            </MudButton>
+        </MudToolBar>
+    </MudStack>
+    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SendPost">Add</MudButton>
+</MudContainer>
+
+@code {
+    private readonly PostRequest _request = new();
+
+    private MudFileUpload<IBrowserFile>? _fileUpload;
+    private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full";
+    private string _dragClass = DefaultDragClass;
+    private string _fileName = string.Empty;
+
+    private async Task SendPost()
+    {
+        if (_request.PhotoData == string.Empty)
+        {
+            Snackbar.Add("You didn't set photo for post. Image is required", Severity.Error);
+            return;
+        }
+
+        _request.UserId = CurrentUser.UserId;
+
+
+        var responseMessage = await Http.PostAsJsonAsync("/post", _request);
+        var content = await responseMessage.Content.ReadFromJsonAsync<BaseResponse>();
+
+        if (!content!.IsSuccessful)
+        {
+            Snackbar.Add(content.Message!, Severity.Error);
+            return;
+        }
+    }
+
+    private async Task ClearAsync()
+    {
+        await (_fileUpload?.ClearAsync() ?? Task.CompletedTask);
+        _fileName = string.Empty;
+        ClearDragClass();
+    }
+
+    private Task OpenFilePickerAsync() => _fileUpload?.OpenFilePickerAsync() ?? Task.CompletedTask;
+
+    private async Task OnInputFileChanged(InputFileChangeEventArgs e)
+    {
+        ClearDragClass();
+        var files = e.GetMultipleFiles();
+        if (files.Count != 1)
+        {
+            return;
+        }
+
+        _fileName = files[0].Name;
+
+        var stream = files[0].OpenReadStream();
+
+        using var memoryStream = new MemoryStream();
+        await stream?.CopyToAsync(memoryStream)!;
+
+        var fileBytes = memoryStream.ToArray();
+        var base64String = Convert.ToBase64String(fileBytes);
+
+        _request.PhotoExtension = _fileName.Split(".")[1];
+        _request.PhotoData = base64String;
+
+        Console.WriteLine(base64String);
+    }
+
+    private void SetDragClass() => _dragClass = $"{DefaultDragClass} mud-border-primary";
+
+    private void ClearDragClass() => _dragClass = DefaultDragClass;
+
+}

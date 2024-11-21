@@ -1,0 +1,89 @@
+﻿@inject EventAggregator EventAggregator
+@inject ICurrentUser CurrentUser
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
+<MudBadge Content="@_receivedMessages.Count" Overlap="true" Class="mx-6 my-4">
+    <MudIcon
+        Icon="@(AreNotifications ? Icons.Material.Filled.NotificationsActive : Icons.Material.Filled.Notifications)" Disabled="@(!AreNotifications)"/>
+</MudBadge>
+
+@code {
+
+    private bool AreNotifications { get; set; }
+
+    private readonly List<string> _receivedMessages = [];
+
+    private ServiceBusClient _client = null!;
+    private ServiceBusProcessor _processor = null!;
+
+    private readonly DialogOptions _dialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Medium, Position = DialogPosition.TopRight, CloseOnEscapeKey = true };
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        EventAggregator.Subscribe("logged", StartProcessing);
+        EventAggregator.Subscribe("NotifCleared", Clear);
+    }
+
+    private async Task ShowDialog()
+    {
+        var parameters = new DialogParameters<NotificationDialog>
+        {
+            { x => x.Notifications, _receivedMessages },
+        };
+
+        await DialogService.ShowAsync<PostDialog>("", parameters, _dialogOptions);
+    }
+
+    private async Task Clear()
+    {
+        _receivedMessages.Clear();
+        AreNotifications = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task StartProcessing()
+    {
+        if (CurrentUser.Email == string.Empty)
+        {
+            return;
+        }
+
+        var clientOptions = new ServiceBusClientOptions
+        {
+            TransportType = ServiceBusTransportType.AmqpWebSockets
+        };
+        _client = new ServiceBusClient(DontCommit.TopicKey, clientOptions);
+        _processor = _client.CreateProcessor("testtopic", CurrentUser.Email.Replace("@", "__"), new ServiceBusProcessorOptions());
+        _processor.ProcessMessageAsync += ProcessMessages;
+        _processor.ProcessErrorAsync += ErrorHandler;
+        await _processor.StartProcessingAsync();
+    }
+
+    private async Task ProcessMessages(ProcessMessageEventArgs args)
+    {
+        var body = args.Message.Body.ToString();
+
+        if (body.Contains(CurrentUser.UserName))
+        {
+            return;
+        }
+
+        _receivedMessages.Add(body);
+        AreNotifications = true;
+        await InvokeAsync(StateHasChanged);
+
+        await args.CompleteMessageAsync(args.Message);
+    }
+
+    private Task ErrorHandler(ProcessErrorEventArgs args)
+    {
+        Console.WriteLine($"Error source: {args.Exception.Source}, Exception: {args.Exception.Message}");
+
+        Snackbar.Add("Some error occured in notification receive task.", Severity.Error);
+
+        return Task.CompletedTask;
+    }
+
+}

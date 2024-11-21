@@ -1,8 +1,10 @@
 ﻿@page "/"
-@inject HttpClient Http
-<PageTitle>Home</PageTitle>
 
 <CheckLogged/>
+
+@inject HttpClient Http
+
+<PageTitle>Home</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.Medium" Class="py-4">
     <Post ShowPlus="true"/>
@@ -31,9 +33,7 @@ else
 }
 
 @code {
-
-
-    List<PostDto>? _posts = null;
+    private List<PostDto>? _posts = null;
 
     protected override async Task OnInitializedAsync()
     {

@@ -2,13 +2,16 @@
     <MudCardHeader>
         <CardHeaderAvatar>
             <MudAvatar Color="Color.Secondary">I</MudAvatar>
+            @* <MudAvatar Color="Color.Secondary">@CommentDto.User.UserName[0]</MudAvatar> *@
         </CardHeaderAvatar>
         <CardHeaderContent>
             <MudText Typo="Typo.body1">User</MudText>
+            @* <MudText Typo="Typo.body1">@CommentDto.User.UserName</MudText> *@
         </CardHeaderContent>
     </MudCardHeader>
     <MudCardContent>
         <MudText Typo="Typo.body2">COMMENT.</MudText>
+        @* <MudText Typo="Typo.body2">@CommentDto.Value</MudText> *@
     </MudCardContent>
 </MudCard>
 @code {

@@ -48,7 +48,6 @@ public class EmoteService(AppDbContext context) :IEmoteService
         {
             EmoteId = emote.Id,
             Emote = emote,
-            User = user,
             UserId = user.Id,
             Post = post,
             PostId = post.Id,

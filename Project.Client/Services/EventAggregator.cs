@@ -6,7 +6,7 @@ public class EventAggregator
 
     public void Subscribe(string eventName, Func<Task> callback)
     {
-        if (!_eventSubscriptions.TryGetValue(eventName, out List<Func<Task>>? value))
+        if (!_eventSubscriptions.TryGetValue(eventName, out var value))
         {
             value = ([]);
             _eventSubscriptions[eventName] = value;

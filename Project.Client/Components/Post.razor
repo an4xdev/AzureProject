@@ -1,24 +1,44 @@
-﻿
-@inject IDialogService DialogService
+﻿@inject IDialogService DialogService
+@inject ICurrentUser CurrentUser
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
 @* based on: https://www.mudblazor.com/components/card#combined *@
 <MudCard>
     <MudCardHeader>
         <CardHeaderAvatar>
             <MudAvatar Color="Color.Secondary">I</MudAvatar>
+            @* <MudAvatar Color="Color.Secondary">@PostDto.Creator.UserName[0]</MudAvatar> *@
         </CardHeaderAvatar>
         <CardHeaderContent>
-            <MudText Typo="Typo.body1">Istra Croatia</MudText>
-            <MudText Typo="Typo.body2">Peninsula in Europe</MudText>
+            <MudText Typo="Typo.body1">User name</MudText>
+            @* <MudText Typo="Typo.body1">@PostDto.Creator.UserName</MudText> *@
         </CardHeaderContent>
     </MudCardHeader>
     @* photo uploaded to azure storage, got from: https://picsum.photos/ *@
     <MudCardMedia Image="https://anax.blob.core.windows.net/test/24d738d3-3da9-4e7d-a992-0d5dbb916415.png"
                   Height="250"/>
+    @* <MudCardMedia Image="@PostDto.PhotoData"Height="250"/> *@
     <MudCardContent>
         <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText>
+        @* <MudText Typo="Typo.body2">@PostDto.Description</MudText> *@
     </MudCardContent>
     <MudCardActions>
+        <MudContainer Class="text-center">
+            <MudText Class="fw-bold">Likes:</MudText>
+            <MudText>190</MudText>
+            @* <MudText Class="fw-bold">Likes:</MudText><MudText>@PostDto.Likes</MudText> *@
+            <MudIconButton Icon="@Icons.Material.Filled.Send" Color="Color.Default"/>
+        </MudContainer>
         <MudContainer Class="justify-content-around">
+            @* TODO: add OnClick event to button *@
+            @* @foreach (var emote in PostDto.Emotes) *@
+            @* { *@
+            @*     <MudBadge Content="@emote.Count" Overlap="true" Class="mx-6 my-4"> *@
+            @*         <MudButton *@
+            @*             Color="@(ActiveEmote(emote.UserIds) ? Color.Secondary : Color.Tertiary)">@emote.Value</MudButton> *@
+            @*     </MudBadge> *@
+            @* } *@
             @* TODO: emotes from db *@
             <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
                 <MudButton>❤️</MudButton>
@@ -46,8 +66,8 @@
 </MudCard>
 
 @code {
-    [Parameter] public required PostDto PostDto { get; set; }
-    [Parameter] public required bool ShowPlus { get; set; }
+    [Parameter] public PostDto PostDto { get; set; }
+    [Parameter] public bool ShowPlus { get; set; }
 
     private readonly DialogOptions _dialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center, CloseOnEscapeKey = true };
 
@@ -56,10 +76,60 @@
         var parameters = new DialogParameters<PostDialog>
         {
             { x => x.PostDto, PostDto },
-            { x => x.ShowPlus, false }
+            { x => x.ShowPlus, false },
         };
 
         await DialogService.ShowAsync<PostDialog>("", parameters, _dialogOptions);
+    }
+
+    private bool ActiveEmote(List<Guid> userIds)
+    {
+        return userIds.Contains(CurrentUser.UserId);
+    }
+
+    private async Task ToggleEmote(Guid emoteId)
+    {
+        var emote = PostDto.Emotes.FirstOrDefault(e => e.Id == emoteId);
+
+        if (emote == null)
+        {
+            Snackbar.Add("Unknown emote.", Severity.Error);
+            return;
+        }
+
+        var request = new ToggleEmoteToPostRequest
+        {
+            EmoteId = emoteId,
+            PostId = PostDto.Id,
+            UserId = CurrentUser.UserId
+        };
+
+        var path = $"{Utils.API_URL}/emote/";
+
+        var contains = emote.UserIds.Contains(CurrentUser.UserId);
+
+        path += contains ? "remove" : "add";
+
+        var response = await Http.PostAsJsonAsync(path, request);
+
+        var content = await response.Content.ReadFromJsonAsync<BaseResponse>();
+
+        if (!content!.IsSuccessful)
+        {
+            Snackbar.Add(content.Message!, Severity.Error);
+            return;
+        }
+
+        if (contains)
+        {
+            emote.UserIds.Remove(CurrentUser.UserId);
+        }
+        else
+        {
+            emote.UserIds.Add(CurrentUser.UserId);
+        }
+
+        await InvokeAsync(StateHasChanged);
     }
 
 }

@@ -10,4 +10,5 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Emote> Emotes { get; set; }
     public DbSet<PostEmote> PostEmotes { get; set; }
+
 }

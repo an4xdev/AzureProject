@@ -1,6 +1,6 @@
 ﻿@page "/Register"
 @inject HttpClient Http
-@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
 
 <PageTitle>Register to our service</PageTitle>
 
@@ -10,24 +10,34 @@
     <MudTextField @bind-Value="_request.Password" T="string" InputType="InputType.Password"
                   Label="Password"></MudTextField>
     <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="RegisterClicked">Register</MudButton>
+    <MudLink Href="/Login" Color="Color.Primary" Underline="Underline.Hover">Already have account? Login then</MudLink>
+    @if (_showLinks)
+    {
+        <div>
+            <MudLink Href="/Login" Color="Color.Secondary" Underline="Underline.Hover">Login page</MudLink>
+        </div>
+        <div>
+            <MudLink Href="/" Color="Color.Secondary" Underline="Underline.Hover">Home page</MudLink>
+        </div>
+    }
 </MudContainer>
-<MudLink Href="/Login">Already have account? Login then</MudLink>
-
-@if (_showLoginLink)
-{
-    <MudLink Href="/Login">Go login!!!</MudLink>
-}
 
 @code {
-    private bool _showLoginLink;
+    private bool _showLinks;
     private readonly RegisterRequest _request = new();
 
     private async Task RegisterClicked()
     {
-        // var response = await Http.PostAsJsonAsync("X", _request);
-        // var content = await response.Content.ReadFromJsonAsync<BaseResponse>();
+        var response = await Http.PostAsJsonAsync($"{Utils.API_URL}/user/register", _request);
+        var content = await response.Content.ReadFromJsonAsync<BaseResponse>();
 
-        _showLoginLink = true;
+        if (!content!.IsSuccessful)
+        {
+            Snackbar.Add(content.Message!, Severity.Error);
+            return;
+        }
+
+        _showLinks = true;
     }
 
 }

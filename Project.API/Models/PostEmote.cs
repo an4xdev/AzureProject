@@ -20,6 +20,4 @@ public class PostEmote
     [ForeignKey("User")]
     public Guid UserId { get; set; }
 
-    public User User { get; set; } = default!;
-
 }

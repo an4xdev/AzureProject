@@ -25,8 +25,6 @@
     restart: always
     environment:
       - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
-    volumes:
-      - api_photos:/app/images
 
   project.client:
     build:
@@ -46,6 +44,4 @@ networks:
 
 volumes:
   sql_data:
-    driver: local
-  api_photos:
     driver: local

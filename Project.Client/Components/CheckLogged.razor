@@ -5,8 +5,8 @@
     protected override async Task OnInitializedAsync()
     {
         // TODO: remove after layout testing
-        await LocalStorage.SetItemAsync("user", "AAA");
-        if (!await LocalStorage.ContainKeyAsync("user"))
+        var contains = await LocalStorage.ContainKeyAsync("user");
+        if (contains)
         {
             NavigationManager.NavigateTo("/Login");
         }

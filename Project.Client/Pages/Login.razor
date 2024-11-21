@@ -4,6 +4,8 @@
 @inject NavigationManager NavigationManager
 @inject ILocalStorageService LocalStorage
 @inject ICurrentUser CurrentUser
+@inject EventAggregator EventAggregator
+@inject ISnackbar Snackbar
 
 <PageTitle>Login to our service</PageTitle>
 
@@ -12,24 +14,34 @@
     <MudTextField @bind-Value="_request.Password" Label="Password" T="string"
                   InputType="InputType.Password"></MudTextField>
     <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="LoginClicked">Login</MudButton>
+    <div>
+        <MudLink Href="/Register" Color="Color.Secondary" Underline="Underline.Hover">Don't have account? Register</MudLink>
+    </div>
 </MudContainer>
-<MudLink Href="/Register">Don't have account? Register</MudLink>
 
 @code {
     private readonly LoginRequest _request = new();
 
     private async Task LoginClicked()
     {
-        // TODO: send to API
+        var response = await Http.PostAsJsonAsync($"{Utils.API_URL}/user/login", _request);
+        var content = await response.Content.ReadFromJsonAsync<LoginResponse>();
 
-        // var response = await Http.PostAsJsonAsync("X", _request);
-        // var content = await response.Content.ReadFromJsonAsync<LoginResponse>();
+        if (!content!.IsSuccessful)
+        {
+            Snackbar.Add(content.Message!, Severity.Error);
+            return;
+        }
 
-        CurrentUser.UserId = Guid.Empty;
+        Snackbar.Add("Successfully logged.", Severity.Success);
+
+        CurrentUser.UserId = content.UserId;
         CurrentUser.Email = _request.Email;
-        CurrentUser.UserName = "";
+        CurrentUser.UserName = content.UserName;
 
         await LocalStorage.SetItemAsync("user", CurrentUser);
+
+        EventAggregator.Publish("logged");
 
         NavigationManager.NavigateTo("/");
     }

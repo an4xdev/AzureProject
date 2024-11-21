@@ -39,7 +39,6 @@ public class CommentService(AppDbContext context) : ICommentService
         var comment = new Models.Comment()
         {
             Value = request.CommentData,
-            User = user,
             UserId = user.Id,
             Post = post,
             PostId = post.Id
@@ -61,7 +60,6 @@ public class CommentService(AppDbContext context) : ICommentService
             User = new UserDto
             {
                 Id = c.UserId,
-                UserName = c.User.Name
             }
         }).ToListAsync();
 

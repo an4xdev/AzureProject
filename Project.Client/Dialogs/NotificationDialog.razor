@@ -1,0 +1,24 @@
+﻿@inject EventAggregator EventAggregator
+<MudDialog>
+    <DialogContent>
+        <MudButton StartIcon="@Icons.Material.Filled.Delete" OnClick="Clear" Color="Color.Error">Clear notifications</MudButton>
+        @foreach (var notification in Notifications)
+        {
+            <MudText>@notification</MudText>
+        }
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public List<string> Notifications { get; set; }
+
+    private void Clear()
+    {
+        Notifications.Clear();
+        EventAggregator.Publish("NotifCleared");
+    }
+}

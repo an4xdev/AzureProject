@@ -4,6 +4,7 @@ using Project.API.Models;
 using Project.API.Services.Comment;
 using Project.API.Services.EmoteService;
 using Project.API.Services.FileService;
+using Project.API.Services.Topic;
 using Project.Shared.DTOs;
 using Project.Shared.Requests;
 using Project.Shared.Responses;
@@ -20,7 +21,7 @@ public interface IPostService
     public Task<BaseResponse> DeletePost(Guid id);
 }
 
-public class PostService(AppDbContext context, ICommentService commentService, IEmoteService emoteService,IFileService fileService, ISendOnTopic sendOnTopic) : IPostService
+public class PostService(AppDbContext context, ICommentService commentService, IEmoteService emoteService,IFileService fileService, ITopicService topicService) : IPostService
 {
     public async Task<PostDto?> GetPostById(Guid postId)
     {
@@ -91,8 +92,7 @@ public class PostService(AppDbContext context, ICommentService commentService, I
 
         response.IsSuccessful = true;
 
-        // TODO: send message on topic
-        // await sendOnTopic.SendMessage("FOO");
+        await topicService.SendMessage($"{user.Name} just added new image. You must check it now!!!");
 
         return await Task.FromResult(response);
     }

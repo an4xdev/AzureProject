@@ -1,6 +1,10 @@
 ﻿<MudDialog>
     <DialogContent>
         <Post ShowPlus="ShowPlus"/>
+        @* @foreach (var comment in PostDto.Comments) *@
+        @* { *@
+        @*     <Comment/> *@
+        @* } *@
         <Comment/>
         <Comment/>
         <Comment/>
@@ -15,5 +19,5 @@
     [Parameter]
     public PostDto PostDto { get; set; }
     [Parameter]
-    public required bool ShowPlus { get; set; }
+    public bool ShowPlus { get; set; }
 }

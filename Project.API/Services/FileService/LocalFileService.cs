@@ -6,7 +6,8 @@ public class LocalFileService(AppDbContext context) : IFileService
 {
     public Task<string> Upload(string imageData, string fileExtension)
     {
-        return Task.FromResult(imageData);
+        var data  = $"data:image/{fileExtension};base64, {imageData}";
+        return Task.FromResult(data);
     }
 
     public Task Replace(string fileName, string fileData)
