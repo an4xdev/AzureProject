@@ -1,0 +1,56 @@
+﻿@inject CurrentUser CurrentUser
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="_request.CommentData" Label="Email" T="string" InputType="InputType.Text" ></MudTextField>
+        <MudButton Color="Color.Success" OnClick="SendComment">Send</MudButton>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    public MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Guid PostId { get; set; }
+
+    private readonly AddCommentRequest _request = new();
+
+    private async Task SendComment()
+    {
+        if (_request.CommentData == string.Empty)
+        {
+            Snackbar.Add("You must write comment.", Severity.Error);
+            return;
+        }
+
+        _request.PostId = PostId;
+        _request.SenderId = CurrentUser.UserId;
+
+        var response = await Http.PostAsJsonAsync($"{Utils.API_URL}/comment", _request);
+
+        var content = await response.Content.ReadFromJsonAsync<AddCommentResponse>();
+
+        if (!content!.IsSuccessful)
+        {
+            Snackbar.Add(content.Message, Severity.Error);
+            MudDialog.Close(DialogResult.Cancel());
+        }
+
+        Snackbar.Add("Successfully added new comment to post.", Severity.Success);
+
+        MudDialog.Close(DialogResult.Ok(new CommentDto
+        {
+            Time = content.Time,
+            User = new UserDto
+            {
+                Id = CurrentUser.UserId,
+                UserName = CurrentUser.UserName
+            },
+            Value = _request.CommentData
+        }));
+
+    }
+}

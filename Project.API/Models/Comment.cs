@@ -10,6 +10,8 @@ public class Comment
 
     public string Value { get; set; }
 
+    public DateTime Time { get; set; }
+
     [ForeignKey("User")]
     public Guid UserId { get; set; }
 

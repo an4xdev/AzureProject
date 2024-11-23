@@ -28,18 +28,16 @@
             <MudText Class="fw-bold">Likes:</MudText>
             <MudText>190</MudText>
             @* <MudText Class="fw-bold">Likes:</MudText><MudText>@PostDto.Likes</MudText> *@
-            <MudIconButton Icon="@Icons.Material.Filled.Send" Color="Color.Default"/>
+            <MudIconButton Icon="@Icons.Material.Filled.Send" Color="Color.Default" OnClick="ShowCommentDialog"/>
         </MudContainer>
         <MudContainer Class="justify-content-around">
-            @* TODO: add OnClick event to button *@
             @* @foreach (var emote in PostDto.Emotes) *@
             @* { *@
             @*     <MudBadge Content="@emote.Count" Overlap="true" Class="mx-6 my-4"> *@
             @*         <MudButton *@
-            @*             Color="@(ActiveEmote(emote.UserIds) ? Color.Secondary : Color.Tertiary)">@emote.Value</MudButton> *@
+            @*             Color="@(ActiveEmote(emote.UserIds) ? Color.Secondary : Color.Tertiary)" OnClick="(() => ToggleEmote(emote.Id)">@emote.Value</MudButton> *@
             @*     </MudBadge> *@
             @* } *@
-            @* TODO: emotes from db *@
             <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
                 <MudButton>❤️</MudButton>
             </MudBadge>
@@ -69,7 +67,9 @@
     [Parameter] public PostDto PostDto { get; set; }
     [Parameter] public bool ShowPlus { get; set; }
 
-    private readonly DialogOptions _dialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center, CloseOnEscapeKey = true };
+    private readonly DialogOptions _postDialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center, CloseOnEscapeKey = true };
+
+    private readonly DialogOptions _commentDialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Medium, Position = DialogPosition.Center, CloseOnEscapeKey = true };
 
     private async Task ShowPostWithComments()
     {
@@ -79,12 +79,36 @@
             { x => x.ShowPlus, false },
         };
 
-        await DialogService.ShowAsync<PostDialog>("", parameters, _dialogOptions);
+        await DialogService.ShowAsync<PostDialog>("", parameters, _postDialogOptions);
     }
 
     private bool ActiveEmote(List<Guid> userIds)
     {
         return userIds.Contains(CurrentUser.UserId);
+    }
+
+    private async Task ShowCommentDialog()
+    {
+        var parameters = new DialogParameters<AddCommentDialog>
+        {
+            { x => x.PostId, PostDto.Id}
+        };
+
+        var dialog = await DialogService.ShowAsync<AddCommentDialog>("", parameters, _commentDialogOptions);
+
+        var result = await dialog.Result;
+
+        if (!result!.Canceled)
+        {
+            if (result.Data is CommentDto commentDto)
+            {
+                PostDto.Comments.Add(commentDto);
+            }
+            else
+            {
+                Snackbar.Add("Internal error with adding new comment. Contact administrator.", Severity.Error);
+            }
+        }
     }
 
     private async Task ToggleEmote(Guid emoteId)

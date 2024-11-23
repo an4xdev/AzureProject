@@ -4,5 +4,5 @@ public class AddCommentRequest
 {
     public Guid PostId { get; set; }
     public Guid SenderId { get; set; }
-    public string CommentData { get; set; }
+    public string CommentData { get; set; } = string.Empty;
 }

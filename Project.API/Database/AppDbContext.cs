@@ -11,4 +11,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Emote> Emotes { get; set; }
     public DbSet<PostEmote> PostEmotes { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Emote>().HasData(
+            new Emote { Id = Guid.NewGuid(), Emoji = "❤️" },
+            new Emote { Id = Guid.NewGuid(), Emoji = "🤣" },
+            new Emote { Id = Guid.NewGuid(), Emoji = "😮" },
+            new Emote { Id = Guid.NewGuid(), Emoji = "😭" },
+            new Emote { Id = Guid.NewGuid(), Emoji = "😡" }
+        );
+
+    }
 }

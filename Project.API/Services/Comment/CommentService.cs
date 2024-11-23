@@ -8,15 +8,15 @@ namespace Project.API.Services.Comment;
 
 public interface ICommentService
 {
-    public Task<BaseResponse> AddComment(AddCommentRequest request);
+    public Task<AddCommentResponse> AddComment(AddCommentRequest request);
     public Task<List<CommentDto>> GetCommentsByPostId(Guid postId);
 }
 
 public class CommentService(AppDbContext context) : ICommentService
 {
-    public async Task<BaseResponse> AddComment(AddCommentRequest request)
+    public async Task<AddCommentResponse> AddComment(AddCommentRequest request)
     {
-        BaseResponse response = new();
+        AddCommentResponse response = new();
 
         var post = await context.Posts.Where(p => p.Id == request.PostId).FirstOrDefaultAsync();
 
@@ -36,12 +36,15 @@ public class CommentService(AppDbContext context) : ICommentService
             return await Task.FromResult(response);
         }
 
-        var comment = new Models.Comment()
+        var now = DateTime.UtcNow;
+
+        var comment = new Models.Comment
         {
             Value = request.CommentData,
             UserId = user.Id,
             Post = post,
-            PostId = post.Id
+            PostId = post.Id,
+            Time = now
         };
 
         await context.Comments.AddAsync(comment);
@@ -49,18 +52,21 @@ public class CommentService(AppDbContext context) : ICommentService
         await context.SaveChangesAsync();
 
         response.IsSuccessful = true;
+        response.Time = now;
+
         return await Task.FromResult(response);
     }
 
     public async Task<List<CommentDto>> GetCommentsByPostId(Guid postId)
     {
-        var comments = await context.Comments.Where(c => c.PostId == postId).Select(c => new CommentDto
+        var comments = await context.Comments.Where(c => c.PostId == postId).OrderByDescending(c=>c.Time).Select(c => new CommentDto
         {
             Value = c.Value,
             User = new UserDto
             {
                 Id = c.UserId,
-            }
+            },
+            Time = c.Time
         }).ToListAsync();
 
         return await Task.FromResult(comments);

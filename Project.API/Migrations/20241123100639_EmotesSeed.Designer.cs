@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.API.Database;
 
@@ -11,9 +12,11 @@ using Project.API.Database;
 namespace Project.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241123100639_EmotesSeed")]
+    partial class EmotesSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +35,6 @@ namespace Project.API.Migrations
 
                     b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -67,27 +67,27 @@ namespace Project.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1aed586c-2122-4c58-abaa-ef1b3a65616a"),
+                            Id = new Guid("d9881368-5d26-4fb8-945f-48caa7f9fc41"),
                             Emoji = "❤️"
                         },
                         new
                         {
-                            Id = new Guid("4084e682-9a5f-484c-ae18-59d741de3349"),
+                            Id = new Guid("25434973-ac5b-4df8-a53d-f9517caf4d14"),
                             Emoji = "🤣"
                         },
                         new
                         {
-                            Id = new Guid("735398e0-5c2e-4441-92c1-6986b1d2b147"),
+                            Id = new Guid("fb96496c-6330-4cbe-bc94-b02d787780b9"),
                             Emoji = "😮"
                         },
                         new
                         {
-                            Id = new Guid("6703b229-384b-48ed-81f5-37fc86e0750f"),
+                            Id = new Guid("7904c836-6c63-4bc6-8db8-eb421bcfb6e6"),
                             Emoji = "😭"
                         },
                         new
                         {
-                            Id = new Guid("67de7108-b508-41d6-b1a4-05a2b748b3e0"),
+                            Id = new Guid("2c09d024-7bff-427d-bd8e-dd39dc8d41e5"),
                             Emoji = "😡"
                         });
                 });
