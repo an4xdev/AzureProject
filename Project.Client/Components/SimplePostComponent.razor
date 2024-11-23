@@ -1,0 +1,21 @@
+﻿<MudCard>
+    @* photo uploaded to azure storage, got from: https://picsum.photos/ *@
+    <MudCardMedia Image="https://anax.blob.core.windows.net/test/24d738d3-3da9-4e7d-a992-0d5dbb916415.png"
+                  Height="250"/>
+    @* <MudCardMedia Image="@PostDto.PhotoData"Height="250"/> *@
+    <MudCardContent>
+        <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText>
+        @* <MudText Typo="Typo.body2">@PostDto.Description</MudText> *@
+    </MudCardContent>
+    <MudCardActions>
+        <MudContainer Class="justify-content-around">
+            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Info"/>
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"/>
+        </MudContainer>
+    </MudCardActions>
+</MudCard>
+
+@code {
+    [Parameter]
+    public SimplePostDto PostDto { get; set; }
+}

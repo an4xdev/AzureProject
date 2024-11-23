@@ -4,6 +4,7 @@
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
+@inject EventAggregator EventAggregator
 @code {
 
     protected override async Task OnInitializedAsync()
@@ -17,6 +18,8 @@
         }
 
         Snackbar.Add("Successfully logged off", Severity.Info);
+
+        EventAggregator.Publish("loggedOFF");
 
         NavigationManager.NavigateTo("/");
     }

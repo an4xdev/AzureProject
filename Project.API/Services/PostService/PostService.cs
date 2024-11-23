@@ -16,12 +16,17 @@ public interface IPostService
     public Task<PostDto?> GetPostById(Guid postId);
     public Task<List<PostDto>> GetAllPosts();
     public Task<BaseResponse> AddPost(PostRequest request);
-    public Task<List<PostDto>> GetUserPosts(Guid userId);
+    public Task<List<SimplePostDto>> GetUserPosts(Guid userId);
     public Task<BaseResponse> UpdatePost(PostRequest request);
-    public Task<BaseResponse> DeletePost(Guid id);
+    public Task<BaseResponse> DeletePost(DeletePostRequest request);
 }
 
-public class PostService(AppDbContext context, ICommentService commentService, IEmoteService emoteService,IFileService fileService, ITopicService topicService) : IPostService
+public class PostService(
+    AppDbContext context,
+    ICommentService commentService,
+    IEmoteService emoteService,
+    IFileService fileService,
+    ITopicService topicService) : IPostService
 {
     public async Task<PostDto?> GetPostById(Guid postId)
     {
@@ -97,20 +102,17 @@ public class PostService(AppDbContext context, ICommentService commentService, I
         return await Task.FromResult(response);
     }
 
-    public async Task<List<PostDto>> GetUserPosts(Guid userId)
+    public async Task<List<SimplePostDto>> GetUserPosts(Guid userId)
     {
-        List<PostDto> response = [];
+        List<SimplePostDto> response = [];
 
         var posts = await context.Posts.Where(p => p.UserId == userId).ToListAsync();
 
-        foreach (var p in posts)
-        {
-            var post = await GetPostById(p.Id);
-            if (post != null)
+        response.AddRange(posts.Select(post =>
+            new SimplePostDto
             {
-                response.Add(post);
-            }
-        }
+                Id = post.Id, Description = post.Description, PhotoData = post.PhotoPath
+            }));
 
         return await Task.FromResult(response);
     }
@@ -147,16 +149,23 @@ public class PostService(AppDbContext context, ICommentService commentService, I
         return await Task.FromResult(response);
     }
 
-    public async Task<BaseResponse> DeletePost(Guid id)
+    public async Task<BaseResponse> DeletePost(DeletePostRequest request)
     {
         BaseResponse response = new();
 
-        var post = await context.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
+        var post = await context.Posts.Where(p => p.Id == request.PostId).FirstOrDefaultAsync();
 
         if (post == null)
         {
             response.IsSuccessful = false;
             response.Message = "Unknown post to delete.";
+            return await Task.FromResult(response);
+        }
+
+        if (post.UserId != request.UserId)
+        {
+            response.IsSuccessful = false;
+            response.Message = "You can't delete someone posts.";
             return await Task.FromResult(response);
         }
 

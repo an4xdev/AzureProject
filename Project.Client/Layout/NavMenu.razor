@@ -1,5 +1,41 @@
-﻿<MudButton ButtonType="ButtonType.Button" Href="/" Variant="Variant.Filled" Color="Color.Secondary">Home</MudButton>
+﻿@inject EventAggregator EventAggregator
+@inject ILocalStorageService LocalStorage
+
+<MudButton ButtonType="ButtonType.Button" Href="/" Variant="Variant.Filled" Color="Color.Secondary">Home</MudButton>
 <MudSpacer />
 <div class="align-items-center d-flex">
-    <LoggedMenuComponent/>
+    @if (IsLogged)
+    {
+        <LoggedMenuComponent/>
+    }
+    else
+    {
+        <AnnonymousMenuComponent/>
+    }
 </div>
+
+
+@code{
+
+    private bool IsLogged { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsLogged = await LocalStorage.ContainKeyAsync("user");
+        EventAggregator.Subscribe("logged", UserLogged);
+        EventAggregator.Subscribe("loggedOFF", UserLoggedOff);
+    }
+
+    private async Task UserLogged()
+    {
+        IsLogged = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task UserLoggedOff()
+    {
+        IsLogged = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+}

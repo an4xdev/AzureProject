@@ -2,13 +2,13 @@
 
 public class EventAggregator
 {
-    private readonly Dictionary<string, List<Func<Task>>> _eventSubscriptions = [];
+    private readonly Dictionary<string, List<Func<Task>>> _eventSubscriptions = new();
 
     public void Subscribe(string eventName, Func<Task> callback)
     {
         if (!_eventSubscriptions.TryGetValue(eventName, out var value))
         {
-            value = ([]);
+            value = [];
             _eventSubscriptions[eventName] = value;
         }
 
@@ -18,7 +18,9 @@ public class EventAggregator
     public void Publish(string eventName)
     {
         if (!_eventSubscriptions.TryGetValue(eventName, out var value)) return;
-        foreach (var callback in value)
+
+        var callbacks = value.ToList();
+        foreach (var callback in callbacks)
         {
             callback.Invoke();
         }

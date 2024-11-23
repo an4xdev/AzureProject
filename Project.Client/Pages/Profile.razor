@@ -1,0 +1,49 @@
+﻿@page "/Profile"
+
+<CheckLogged/>
+
+@inject HttpClient Http
+@inject ICurrentUser CurrentUser
+<PageTitle>Your profile</PageTitle>
+
+@switch (_posts)
+{
+    case null when _loading:
+        <MudText>Loading...</MudText>
+        break;
+    case null when !_loading:
+        <MudText>You dont have any posts. Maybe add someone?</MudText>
+        <MudLink Href="/Form" Color="Color.Secondary" Underline="Underline.Hover">Add</MudLink>
+        break;
+    default:
+    {
+        if (_posts != null)
+        {
+            foreach (var post in _posts)
+            {
+
+            }
+        }
+
+        <SimplePostComponent/>
+        <SimplePostComponent/>
+        <SimplePostComponent/>
+        <SimplePostComponent/>
+        <SimplePostComponent/>
+        <SimplePostComponent/>
+
+        break;
+    }
+}
+
+@code {
+    private List<SimplePostDto>? _posts;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // _posts = await Http.GetFromJsonAsync<List<SimplePostDto>>($"{Utils.API_URL}/post/{CurrentUser.UserId}");
+        _loading = false;
+    }
+
+}
