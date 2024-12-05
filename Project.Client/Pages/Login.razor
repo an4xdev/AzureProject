@@ -10,12 +10,12 @@
 <PageTitle>Login to our service</PageTitle>
 
 <MudContainer>
-    <MudTextField @bind-Value="_request.Email" Label="Email" T="string" InputType="InputType.Email"></MudTextField>
+    <MudTextField @bind-Value="_request.Email" Label="Email" T="string" InputType="InputType.Email" Class="m-2"></MudTextField>
     <MudTextField @bind-Value="_request.Password" Label="Password" T="string"
-                  InputType="InputType.Password"></MudTextField>
-    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="LoginClicked">Login</MudButton>
+                  InputType="InputType.Password" Class="m-2"></MudTextField>
+    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="LoginClicked" Class="m-2">Login</MudButton>
     <div>
-        <MudLink Href="/Register" Color="Color.Secondary" Underline="Underline.Hover">Don't have account? Register</MudLink>
+        <MudLink Href="/Register" Color="Color.Secondary" Underline="Underline.Hover" Class="m-2">Don't have account? Register</MudLink>
     </div>
 </MudContainer>
 

@@ -1,16 +1,29 @@
-﻿<MudCard>
+﻿@using System.Text
+@using System.Text.Json
+@inject HttpClient Http
+@inject ICurrentUser CurrentUser
+@inject ISnackbar SnackBar
+<MudCard>
     @* photo uploaded to azure storage, got from: https://picsum.photos/ *@
-    <MudCardMedia Image="https://anax.blob.core.windows.net/test/24d738d3-3da9-4e7d-a992-0d5dbb916415.png"
-                  Height="250"/>
-    @* <MudCardMedia Image="@PostDto.PhotoData"Height="250"/> *@
+    @* <MudCardMedia Image="https://anax.blob.core.windows.net/test/24d738d3-3da9-4e7d-a992-0d5dbb916415.png" *@
+    @*               Height="250"/> *@
+    <MudCardMedia Image="@PostDto.PhotoData" Height="250"/>
     <MudCardContent>
-        <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText>
-        @* <MudText Typo="Typo.body2">@PostDto.Description</MudText> *@
+        @if (PostDto.Description != null)
+        {
+            @* <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText> *@
+            <MudText Typo="Typo.body2">@PostDto.Description</MudText>
+        }
+        else
+        {
+            <MudText Typo="Typo.body2" Color="Color.Error">This post doesn't have a description</MudText>
+        }
+        @* <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText> *@
     </MudCardContent>
     <MudCardActions>
         <MudContainer Class="justify-content-around">
             <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Info"/>
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"/>
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="DeletePost"/>
         </MudContainer>
     </MudCardActions>
 </MudCard>
@@ -18,4 +31,37 @@
 @code {
     [Parameter]
     public SimplePostDto PostDto { get; set; }
+    [Parameter]
+    public EventCallback<Guid> OnDelete { get; set; }
+
+    private async Task DeletePost()
+    {
+        var request = new DeletePostRequest
+        {
+            PostId = PostDto.Id,
+            UserId = CurrentUser.UserId
+        };
+
+        // var response = await Http.DeleteFromJsonAsync<BaseResponse>("post", DeletePostRequest);
+        var response = await Http.SendAsync(new HttpRequestMessage
+        {
+            Method = HttpMethod.Delete,
+            RequestUri = new Uri($"{Utils.API_URL}/post"),
+            Content = new StringContent(JsonSerializer.Serialize(request),
+                Encoding.UTF8,
+                "application/json")
+        });
+
+        var content = await response.Content.ReadFromJsonAsync<BaseResponse>();
+
+        if (!content!.IsSuccessful)
+        {
+            SnackBar.Add(content.Message, Severity.Error);
+            return;
+        }
+
+        SnackBar.Add("Successfully deleted post", Severity.Success);
+
+        await OnDelete.InvokeAsync(PostDto.Id);
+    }
 }

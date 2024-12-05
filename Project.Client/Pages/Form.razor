@@ -80,7 +80,7 @@
         _request.UserId = CurrentUser.UserId;
 
 
-        var responseMessage = await Http.PostAsJsonAsync("/post", _request);
+        var responseMessage = await Http.PostAsJsonAsync($"{Utils.API_URL}/post", _request);
         var content = await responseMessage.Content.ReadFromJsonAsync<BaseResponse>();
 
         if (!content!.IsSuccessful)
@@ -88,6 +88,8 @@
             Snackbar.Add(content.Message, Severity.Error);
             return;
         }
+
+        Snackbar.Add("Successfully added new post", Severity.Success);
     }
 
     private async Task ClearAsync()

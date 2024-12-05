@@ -2,81 +2,88 @@
 @inject ICurrentUser CurrentUser
 @inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
 
 @* based on: https://www.mudblazor.com/components/card#combined *@
 <MudCard>
     <MudCardHeader>
         <CardHeaderAvatar>
-            <MudAvatar Color="Color.Secondary">I</MudAvatar>
-            @* <MudAvatar Color="Color.Secondary">@PostDto.Creator.UserName[0]</MudAvatar> *@
+            @* <MudAvatar Color="Color.Secondary">I</MudAvatar> *@
+            <MudAvatar Color="Color.Secondary">@PostDto.Creator.UserName[0]</MudAvatar>
         </CardHeaderAvatar>
         <CardHeaderContent>
-            <MudText Typo="Typo.body1">User name</MudText>
-            @* <MudText Typo="Typo.body1">@PostDto.Creator.UserName</MudText> *@
+            @* <MudText Typo="Typo.body1">User name</MudText> *@
+            <MudText Typo="Typo.body1">@PostDto.Creator.UserName</MudText>
         </CardHeaderContent>
     </MudCardHeader>
     @* photo uploaded to azure storage, got from: https://picsum.photos/ *@
-    <MudCardMedia Image="https://anax.blob.core.windows.net/test/24d738d3-3da9-4e7d-a992-0d5dbb916415.png"
-                  Height="250"/>
-    @* <MudCardMedia Image="@PostDto.PhotoData"Height="250"/> *@
+    @* <MudCardMedia Image="https://anax.blob.core.windows.net/test/24d738d3-3da9-4e7d-a992-0d5dbb916415.png" Height="250"/> *@
+    <MudCardMedia Image="@PostDto.PhotoData" Height="250"/>
     <MudCardContent>
-        <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText>
-        @* <MudText Typo="Typo.body2">@PostDto.Description</MudText> *@
+        @if (PostDto.Description != null)
+        {
+            @* <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText> *@
+            <MudText Typo="Typo.body2">@PostDto.Description</MudText>
+        }
+        else
+        {
+            <MudText Typo="Typo.body2" Color="Color.Error">This post doesn't have a description</MudText>
+        }
     </MudCardContent>
     <MudCardActions>
         <MudContainer Class="text-center">
-            <MudText Class="fw-bold">Likes:</MudText>
-            <MudText>190</MudText>
-            @* <MudText Class="fw-bold">Likes:</MudText><MudText>@PostDto.Likes</MudText> *@
-            <MudIconButton Icon="@Icons.Material.Filled.Send" Color="Color.Default" OnClick="ShowCommentDialog"/>
+            <MudText Class="fw-bold">Likes:</MudText><MudText>@PostDto.Likes</MudText>
+            <MudIconButton Icon="@Icons.Material.Filled.AddComment" Color="Color.Default" OnClick="ShowCommentDialog"/>
         </MudContainer>
         <MudContainer Class="justify-content-around">
-            @* @foreach (var emote in PostDto.Emotes) *@
-            @* { *@
-            @*     <MudBadge Content="@emote.Count" Overlap="true" Class="mx-6 my-4"> *@
-            @*         <MudButton *@
-            @*             Color="@(ActiveEmote(emote.UserIds) ? Color.Secondary : Color.Tertiary)" OnClick="(() => ToggleEmote(emote.Id)">@emote.Value</MudButton> *@
-            @*     </MudBadge> *@
-            @* } *@
-            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
-                <MudButton>❤️</MudButton>
-            </MudBadge>
-            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
-                <MudButton>😊</MudButton>
-            </MudBadge>
-            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
-                <MudButton>🤣</MudButton>
-            </MudBadge>
-            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
-                <MudButton>😍</MudButton>
-            </MudBadge>
-            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
-                <MudButton>👍</MudButton>
-            </MudBadge>
+            @foreach (var emote in PostDto.Emotes)
+            {
+                <MudBadge Content="@emote.Count" Overlap="true" Class="mx-6 my-4">
+                    <MudButton Style="@(ActiveEmote(emote.UserIds) ? _addedEmote : _notAddedEmote)" OnClick="(() => ToggleEmote(emote.Id))">@emote.Value</MudButton>
+                </MudBadge>
+            }
+            @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
+            @*     <MudButton>❤️</MudButton> *@
+            @* </MudBadge> *@
+            @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
+            @*     <MudButton>😊</MudButton> *@
+            @* </MudBadge> *@
+            @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
+            @*     <MudButton>🤣</MudButton> *@
+            @* </MudBadge> *@
+            @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
+            @*     <MudButton>😍</MudButton> *@
+            @* </MudBadge> *@
+            @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
+            @*     <MudButton>👍</MudButton> *@
+            @* </MudBadge> *@
         </MudContainer>
     </MudCardActions>
-    @if (ShowPlus)
+    @if (ShowMore)
     {
         <MudContainer Class="text-center">
-            <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Default" OnClick="ShowPostWithComments"/>
+            <MudIconButton Icon="@Icons.Material.Filled.MoreHoriz" Color="Color.Default" OnClick="ShowPostWithComments"/>
         </MudContainer>
     }
 </MudCard>
 
 @code {
     [Parameter] public PostDto PostDto { get; set; }
-    [Parameter] public bool ShowPlus { get; set; }
+    [Parameter] public bool ShowMore { get; set; }
+
+    private readonly string _addedEmote = "border:1px solid green;";
+    private readonly string _notAddedEmote = "border:1px solid black;";
 
     private readonly DialogOptions _postDialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center, CloseOnEscapeKey = true };
 
-    private readonly DialogOptions _commentDialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Medium, Position = DialogPosition.Center, CloseOnEscapeKey = true };
+    private readonly DialogOptions _commentDialogOptions = new() { CloseButton = true, MaxWidth = MaxWidth.Medium, Position = DialogPosition.Center, CloseOnEscapeKey = true };
 
     private async Task ShowPostWithComments()
     {
         var parameters = new DialogParameters<PostDialog>
         {
             { x => x.PostDto, PostDto },
-            { x => x.ShowPlus, false },
+            { x => x.ShowMore, false },
         };
 
         await DialogService.ShowAsync<PostDialog>("", parameters, _postDialogOptions);
@@ -84,17 +91,37 @@
 
     private bool ActiveEmote(List<Guid> userIds)
     {
-        return userIds.Contains(CurrentUser.UserId);
+        return CurrentUser?.UserId != null && userIds.Contains(CurrentUser.UserId);
     }
 
     private async Task ShowCommentDialog()
     {
+        // TODO: split into two functions maybe?
+        if (CurrentUser.UserName == string.Empty)
+        {
+            var loginParameters = new DialogParameters<MustLoginDialog>()
+            {
+                { x => x.Action, "comment the post." }
+            };
+
+            var loginDialog = DialogService.Show<MustLoginDialog>("", loginParameters);
+
+            var loginResult = await loginDialog.Result;
+
+            if (loginResult!.Canceled)
+            {
+                return;
+            }
+
+            NavigationManager.NavigateTo("/Login");
+        }
+
         var parameters = new DialogParameters<AddCommentDialog>
         {
             { x => x.PostId, PostDto.Id}
         };
 
-        var dialog = await DialogService.ShowAsync<AddCommentDialog>("", parameters, _commentDialogOptions);
+        var dialog = DialogService.Show<AddCommentDialog>("Add new comment", parameters, _commentDialogOptions);
 
         var result = await dialog.Result;
 
@@ -113,6 +140,26 @@
 
     private async Task ToggleEmote(Guid emoteId)
     {
+
+        if (CurrentUser.UserName == string.Empty)
+        {
+            var loginParameters = new DialogParameters<MustLoginDialog>()
+            {
+                { x => x.Action, "change emote to the post." }
+            };
+
+            var loginDialog = await DialogService.ShowAsync<MustLoginDialog>("", loginParameters);
+
+            var loginResult = await loginDialog.Result;
+
+            if (loginResult.Canceled)
+            {
+                return;
+            }
+
+            NavigationManager.NavigateTo("/Login");
+        }
+
         var emote = PostDto.Emotes.FirstOrDefault(e => e.Id == emoteId);
 
         if (emote == null)

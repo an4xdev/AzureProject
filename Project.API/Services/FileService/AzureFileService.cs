@@ -37,4 +37,10 @@ public class AzureFileService : IFileService
         await blobClient.UploadAsync(stream, overwrite:true);
     }
 
+    public async Task Delete(string filePath)
+    {
+        var blobClient = new BlobClient(new Uri(filePath));
+
+        await blobClient.DeleteIfExistsAsync();
+    }
 }

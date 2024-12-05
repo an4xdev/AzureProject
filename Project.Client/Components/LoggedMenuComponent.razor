@@ -1,19 +1,24 @@
-﻿@inject CurrentUser CurrentUser
-<div class="ms-4 me-4">
-    <Notifications/>
-</div>
-<div class="ms-4 me-4">
-    <ChangeThemeComponent/>
-</div>
-<div class="ms-4 me-4">
-    <MudAvatar Color="Color.Secondary">@CurrentUser.UserName[0]</MudAvatar>
-</div>
-<div class="ms-4 me-4">
-    <MudButton ButtonType="ButtonType.Button" Href="/Profile" Variant="Variant.Filled" Color="Color.Secondary">My profile</MudButton>
-</div>
-<div class="ms-4 me-4">
-    <MudButton ButtonType="ButtonType.Button" Href="/Logout" Variant="Variant.Filled" Color="Color.Secondary">Logout</MudButton>
-</div>
+﻿@inject ICurrentUser CurrentUser
+
+@if (CurrentUser.UserName != string.Empty)
+{
+    <div class="ms-4 me-4">
+        <Notifications/>
+    </div>
+    <div class="ms-4 me-4">
+        <ChangeThemeComponent/>
+    </div>
+    <div class="ms-4 me-4">
+        <MudAvatar Color="Color.Secondary">@CurrentUser.UserName[0]</MudAvatar>
+    </div>
+    <div class="ms-4 me-4">
+        <MudButton ButtonType="ButtonType.Button" Href="/Profile" Variant="Variant.Filled" Color="Color.Secondary">My profile</MudButton>
+    </div>
+    <div class="ms-4 me-4">
+        <MudButton ButtonType="ButtonType.Button" Href="/Logout" Variant="Variant.Filled" Color="Color.Secondary">Logout</MudButton>
+    </div>
+}
+
 @code {
     
 }

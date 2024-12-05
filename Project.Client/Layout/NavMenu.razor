@@ -1,5 +1,6 @@
 ﻿@inject EventAggregator EventAggregator
 @inject ILocalStorageService LocalStorage
+@inject ICurrentUser CurrentUser
 
 <MudButton ButtonType="ButtonType.Button" Href="/" Variant="Variant.Filled" Color="Color.Secondary">Home</MudButton>
 <MudSpacer />
@@ -22,6 +23,10 @@
     protected override async Task OnInitializedAsync()
     {
         IsLogged = await LocalStorage.ContainKeyAsync("user");
+        if (IsLogged)
+        {
+            CurrentUser = await LocalStorage.GetItemAsync<CurrentUser>("user");
+        }
         EventAggregator.Subscribe("logged", UserLogged);
         EventAggregator.Subscribe("loggedOFF", UserLoggedOff);
     }

@@ -5,19 +5,20 @@
 <PageTitle>Register to our service</PageTitle>
 
 <MudContainer>
-    <MudTextField @bind-Value="_request.Name" T="string" InputType="InputType.Text" Label="User name"></MudTextField>
-    <MudTextField @bind-Value="_request.Email" T="string" InputType="InputType.Email" Label="E-mail"></MudTextField>
+    <MudTextField @bind-Value="_request.Name" T="string" InputType="InputType.Text" Label="User name" Class="m-2"></MudTextField>
+    <MudTextField @bind-Value="_request.Email" T="string" InputType="InputType.Email" Label="E-mail" Class="m-2"></MudTextField>
     <MudTextField @bind-Value="_request.Password" T="string" InputType="InputType.Password"
-                  Label="Password"></MudTextField>
-    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="RegisterClicked">Register</MudButton>
-    <MudLink Href="/Login" Color="Color.Primary" Underline="Underline.Hover">Already have account? Login then</MudLink>
+                  Label="Password" Class="m-2"></MudTextField>
+    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="RegisterClicked" Class="m-2">Register</MudButton>
+    <br/>
+    <MudLink Href="/Login" Color="Color.Primary" Underline="Underline.Hover" Class="m-2">Already have account? Login then</MudLink>
     @if (_showLinks)
     {
         <div>
-            <MudLink Href="/Login" Color="Color.Secondary" Underline="Underline.Hover">Login page</MudLink>
+            <MudLink Href="/Login" Color="Color.Secondary" Underline="Underline.Hover" Class="m-2">Login page</MudLink>
         </div>
         <div>
-            <MudLink Href="/" Color="Color.Secondary" Underline="Underline.Hover">Home page</MudLink>
+            <MudLink Href="/" Color="Color.Secondary" Underline="Underline.Hover" Class="m-2">Home page</MudLink>
         </div>
     }
 </MudContainer>

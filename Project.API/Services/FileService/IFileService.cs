@@ -17,4 +17,11 @@ public interface IFileService
     /// <param name="fileData">New image data in Base64 Encoding</param>
     /// <returns>Base64 in local, path in Azure Storage</returns>
     Task Replace(string fileName, string fileData);
+
+    /// <summary>
+    /// Delete existing file from storage
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
+    Task Delete(string filePath);
 }

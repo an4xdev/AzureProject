@@ -6,7 +6,7 @@ namespace Project.API.Models;
 public class Comment
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Value { get; set; }
 
@@ -14,6 +14,8 @@ public class Comment
 
     [ForeignKey("User")]
     public Guid UserId { get; set; }
+
+    public User User = default!;
 
     [ForeignKey("Post")]
     public Guid PostId { get; set; }

@@ -1,15 +1,10 @@
 ﻿<MudDialog>
     <DialogContent>
-        <Post ShowPlus="ShowPlus"/>
-        @* @foreach (var comment in PostDto.Comments) *@
-        @* { *@
-        @*     <Comment/> *@
-        @* } *@
-        <Comment/>
-        <Comment/>
-        <Comment/>
-        <Comment/>
-        <Comment/>
+        <Post ShowMore="ShowMore" PostDto="PostDto"/>
+        @foreach (var comment in PostDto.Comments)
+        {
+            <Comment CommentDto="comment"/>
+        }
     </DialogContent>
 </MudDialog>
 @code {
@@ -19,5 +14,12 @@
     [Parameter]
     public PostDto PostDto { get; set; }
     [Parameter]
-    public bool ShowPlus { get; set; }
+    public bool ShowMore { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        PostDto.Comments.ForEach(c => Console.WriteLine($"{c.User.UserName}: {c.Value} at: {c.Time}"));
+    }
+
 }

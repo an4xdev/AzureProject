@@ -6,7 +6,7 @@ namespace Project.API.Models;
 public class PostEmote
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [ForeignKey("Post")]
     public Guid PostId { get; set; }

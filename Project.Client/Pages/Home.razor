@@ -5,38 +5,38 @@
 <PageTitle>Home</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.Medium" Class="py-4">
-    <Post ShowPlus="true"/>
-    <Post ShowPlus="true"/>
-    <Post ShowPlus="true"/>
-    <Post ShowPlus="true"/>
-</MudContainer>
 
-@if (_posts == null)
-{
-    <MudText>Loading posts</MudText>
-}
-else
-{
-    if (_posts.Count == 0)
+    <div class="text-center">
+        <MudText Typo="Typo.h5">Add new post</MudText>
+        <MudLink Href="/Form" Color="Color.Secondary" Underline="Underline.Hover" Class="m-2"><MudIconButton Icon="@Icons.Material.Filled.Add"/></MudLink>
+    </div>
+
+    @if (_posts == null)
     {
-        <MudText>No posts, add some maybe?</MudText>
+        <MudText>Loading posts</MudText>
     }
     else
     {
-        foreach (var postDto in _posts)
+        if (_posts.Count == 0)
         {
-            <Post PostDto="postDto"/>
+            <MudText>No posts, add some maybe?</MudText>
+        }
+        else
+        {
+            foreach (var postDto in _posts)
+            {
+                <Post PostDto="postDto" ShowMore="true"/>
+            }
         }
     }
-}
+</MudContainer>
 
 @code {
     private List<PostDto>? _posts = null;
 
     protected override async Task OnInitializedAsync()
     {
-        // _posts = await Http.GetFromJsonAsync<List<PostDto>>("X") ?? [];
-        _posts = [];
+        _posts = await Http.GetFromJsonAsync<List<PostDto>>($"{Utils.API_URL}/post") ?? [];
     }
 
 }

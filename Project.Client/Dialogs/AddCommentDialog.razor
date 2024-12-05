@@ -1,10 +1,10 @@
-﻿@inject CurrentUser CurrentUser
+﻿@inject ICurrentUser CurrentUser
 @inject HttpClient Http
 @inject ISnackbar Snackbar
 
 <MudDialog>
     <DialogContent>
-        <MudTextField @bind-Value="_request.CommentData" Label="Email" T="string" InputType="InputType.Text" ></MudTextField>
+        <MudTextField @bind-Value="_request.CommentData" Label="Comment content" T="string" InputType="InputType.Text" ></MudTextField>
         <MudButton Color="Color.Success" OnClick="SendComment">Send</MudButton>
     </DialogContent>
 </MudDialog>

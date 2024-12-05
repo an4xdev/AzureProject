@@ -59,16 +59,22 @@ public class CommentService(AppDbContext context) : ICommentService
 
     public async Task<List<CommentDto>> GetCommentsByPostId(Guid postId)
     {
-        var comments = await context.Comments.Where(c => c.PostId == postId).OrderByDescending(c=>c.Time).Select(c => new CommentDto
+        var comments = await context.Comments
+            .Where(c => c.PostId == postId)
+            .OrderByDescending(c=>c.Time)
+            .ToListAsync();
+
+        var commentsDto = comments.Select(c => new CommentDto
         {
             Value = c.Value,
             User = new UserDto
             {
                 Id = c.UserId,
+                UserName = context.Users.Where(u=>u.Id == c.UserId).Select(u=>u.Name).First()
             },
             Time = c.Time
-        }).ToListAsync();
+        }).ToList();
 
-        return await Task.FromResult(comments);
+        return await Task.FromResult(commentsDto);
     }
 }

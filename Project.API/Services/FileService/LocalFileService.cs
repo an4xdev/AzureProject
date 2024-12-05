@@ -14,4 +14,9 @@ public class LocalFileService(AppDbContext context) : IFileService
     {
         return Task.CompletedTask;
     }
+
+    public Task Delete(string filePath)
+    {
+        return Task.CompletedTask;
+    }
 }

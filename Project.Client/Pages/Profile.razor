@@ -4,6 +4,7 @@
 
 @inject HttpClient Http
 @inject ICurrentUser CurrentUser
+
 <PageTitle>Your profile</PageTitle>
 
 @switch (_posts)
@@ -12,8 +13,10 @@
         <MudText>Loading...</MudText>
         break;
     case null when !_loading:
-        <MudText>You dont have any posts. Maybe add someone?</MudText>
-        <MudLink Href="/Form" Color="Color.Secondary" Underline="Underline.Hover">Add</MudLink>
+        <div class="text-center">
+            <MudText Typo="Typo.h6">You dont have any posts. Maybe add someone?</MudText>
+            <MudLink Href="/Form" Color="Color.Secondary" Underline="Underline.Hover" Class="m-2"><MudIconButton Icon="@Icons.Material.Filled.Add"/></MudLink>
+        </div>
         break;
     default:
     {
@@ -21,17 +24,13 @@
         {
             foreach (var post in _posts)
             {
-
+                <SimplePostComponent PostDto="post" OnDelete="HandleDelete"/>
             }
         }
-
-        <SimplePostComponent/>
-        <SimplePostComponent/>
-        <SimplePostComponent/>
-        <SimplePostComponent/>
-        <SimplePostComponent/>
-        <SimplePostComponent/>
-
+        else
+        {
+            <MudText>Something went wrong please contact administrator.</MudText>
+        }
         break;
     }
 }
@@ -42,8 +41,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // _posts = await Http.GetFromJsonAsync<List<SimplePostDto>>($"{Utils.API_URL}/post/{CurrentUser.UserId}");
+        _posts = await Http.GetFromJsonAsync<List<SimplePostDto>>($"{Utils.API_URL}/post/{CurrentUser.UserId}");
         _loading = false;
+    }
+
+    private async Task HandleDelete(Guid postId)
+    {
+        var itemToRemove = _posts?.FirstOrDefault(p => p.Id == postId);
+        if (itemToRemove != null)
+        {
+            _posts?.Remove(itemToRemove);
+            await InvokeAsync(StateHasChanged);
+        }
     }
 
 }

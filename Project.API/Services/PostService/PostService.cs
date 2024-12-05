@@ -30,7 +30,7 @@ public class PostService(
 {
     public async Task<PostDto?> GetPostById(Guid postId)
     {
-        var p = await context.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
+        var p = await context.Posts.Where(p => p.Id == postId).Include(post => post.User).FirstOrDefaultAsync();
 
         if (p == null)
         {
@@ -48,7 +48,12 @@ public class PostService(
             Likes = p.Likes,
             Emotes = emotes,
             Comments = comments,
-            Description = p.Description
+            Description = p.Description,
+            Creator = new UserDto
+            {
+                Id = p.User.Id,
+                UserName = p.User.Name
+            }
         });
     }
 
@@ -170,6 +175,8 @@ public class PostService(
         }
 
         context.Posts.Remove(post);
+
+        await fileService.Delete(post.PhotoPath);
 
         await context.SaveChangesAsync();
 

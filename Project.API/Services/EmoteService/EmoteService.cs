@@ -112,30 +112,28 @@ public class EmoteService(AppDbContext context) :IEmoteService
 
     public async Task<List<EmoteDto>> GetEmotesByPostId(Guid postId)
     {
-        List<EmoteDto> emotes = [];
+        var emotes = await context.Emotes.ToListAsync();
 
-        await context.Emotes.ForEachAsync(async void (e) =>
+        var emoteDtos = new List<EmoteDto>();
+
+        foreach (var e in emotes)
         {
-            var count =
-                context
-                    .PostEmotes
-                    .Count(pe => pe.PostId == postId && pe.EmoteId == e.Id);
+            var count = await context.PostEmotes
+                .CountAsync(pe => pe.PostId == postId && pe.EmoteId == e.Id);
 
-            var users = await
-                context
-                    .PostEmotes
-                    .Where(pe => pe.EmoteId == e.Id && pe.PostId == postId)
-                    .Select(pe => pe.UserId)
-                    .ToListAsync();
+            var users = await context.PostEmotes
+                .Where(pe => pe.EmoteId == e.Id && pe.PostId == postId)
+                .Select(pe => pe.UserId)
+                .ToListAsync();
 
-            emotes.Add(new EmoteDto
+            emoteDtos.Add(new EmoteDto
             {
                 Value = e.Emoji,
                 Count = count,
                 UserIds = users
             });
-        });
+        }
 
-        return await Task.FromResult(emotes);
+        return await Task.FromResult(emoteDtos);
     }
 }
