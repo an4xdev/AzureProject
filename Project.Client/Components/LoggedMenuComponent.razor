@@ -1,6 +1,6 @@
-﻿@inject ICurrentUser CurrentUser
+﻿@inject ILocalStorageService LocalStorage
 
-@if (CurrentUser.UserName != string.Empty)
+@if (_currentUser != null && _currentUser.UserId != Guid.Empty)
 {
     <div class="ms-4 me-4">
         <Notifications/>
@@ -9,7 +9,7 @@
         <ChangeThemeComponent/>
     </div>
     <div class="ms-4 me-4">
-        <MudAvatar Color="Color.Secondary">@CurrentUser.UserName[0]</MudAvatar>
+        <MudAvatar Color="Color.Secondary">@_currentUser.UserName[0]</MudAvatar>
     </div>
     <div class="ms-4 me-4">
         <MudButton ButtonType="ButtonType.Button" Href="/Profile" Variant="Variant.Filled" Color="Color.Secondary">My profile</MudButton>
@@ -20,5 +20,17 @@
 }
 
 @code {
-    
+
+    private CurrentUser _currentUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var contains = await LocalStorage.ContainKeyAsync("user");
+
+        if (contains)
+        {
+            _currentUser = await LocalStorage.GetItemAsync<CurrentUser>("user");
+        }
+    }
+
 }

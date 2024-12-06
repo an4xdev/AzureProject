@@ -1,6 +1,5 @@
 ﻿@page "/Logout"
 
-@inject ICurrentUser CurrentUser
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
@@ -12,9 +11,6 @@
         if (await LocalStorage.ContainKeyAsync("user"))
         {
             await LocalStorage.RemoveItemAsync("user");
-            CurrentUser.UserId = Guid.Empty;
-            CurrentUser.UserName = string.Empty;
-            CurrentUser.Email = string.Empty;
         }
 
         Snackbar.Add("Successfully logged off", Severity.Info);

@@ -1,7 +1,7 @@
 ﻿@inject EventAggregator EventAggregator
-@inject ICurrentUser CurrentUser
 @inject IDialogService DialogService
 @inject ISnackbar Snackbar
+@inject ILocalStorageService LocalStorage
 
 <MudBadge Content="@_receivedMessages.Count" Overlap="true" Class="mx-6 my-4">
     <MudIcon
@@ -9,6 +9,8 @@
 </MudBadge>
 
 @code {
+
+    private CurrentUser _currentUser = new();
 
     private bool AreNotifications { get; set; }
 
@@ -40,12 +42,19 @@
     {
         _receivedMessages.Clear();
         AreNotifications = false;
-        await InvokeAsync(StateHasChanged);
+        StateHasChanged();
     }
 
     private async Task StartProcessing()
     {
-        if (CurrentUser.Email == string.Empty)
+        if (!await LocalStorage.ContainKeyAsync("user"))
+        {
+            return;
+        }
+
+        _currentUser = await LocalStorage.GetItemAsync<CurrentUser>("user");
+
+        if (_currentUser == null)
         {
             return;
         }
@@ -55,7 +64,7 @@
             TransportType = ServiceBusTransportType.AmqpWebSockets
         };
         _client = new ServiceBusClient(DontCommit.TopicKey, clientOptions);
-        _processor = _client.CreateProcessor("testtopic", CurrentUser.Email.Replace("@", "__"), new ServiceBusProcessorOptions());
+        _processor = _client.CreateProcessor("testtopic", _currentUser.Email.Replace("@", "__"), new ServiceBusProcessorOptions());
         _processor.ProcessMessageAsync += ProcessMessages;
         _processor.ProcessErrorAsync += ErrorHandler;
         await _processor.StartProcessingAsync();
@@ -65,14 +74,14 @@
     {
         var body = args.Message.Body.ToString();
 
-        if (body.Contains(CurrentUser.UserName))
+        if (_currentUser != null && body.Contains(_currentUser.UserName))
         {
             return;
         }
 
         _receivedMessages.Add(body);
         AreNotifications = true;
-        await InvokeAsync(StateHasChanged);
+        StateHasChanged();
 
         await args.CompleteMessageAsync(args.Message);
     }

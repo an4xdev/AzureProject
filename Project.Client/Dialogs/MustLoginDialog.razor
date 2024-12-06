@@ -3,7 +3,7 @@
         <MudText>You must login to @Action</MudText>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Default" OnClick="() => MudDialog.Close(DialogResult.Cancel)">Cancel</MudButton>
+        <MudButton Color="Color.Default" OnClick="() => MudDialog.Close(DialogResult.Ok(false))">Cancel</MudButton>
         <MudButton Color="Color.Success" OnClick="() => MudDialog.Close(DialogResult.Ok(true))">Login</MudButton>
     </DialogActions>
 </MudDialog>

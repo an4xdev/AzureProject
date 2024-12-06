@@ -1,71 +1,78 @@
 ﻿@inject IDialogService DialogService
-@inject ICurrentUser CurrentUser
 @inject HttpClient Http
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
 
-@* based on: https://www.mudblazor.com/components/card#combined *@
-<MudCard>
-    <MudCardHeader>
-        <CardHeaderAvatar>
-            @* <MudAvatar Color="Color.Secondary">I</MudAvatar> *@
-            <MudAvatar Color="Color.Secondary">@PostDto.Creator.UserName[0]</MudAvatar>
-        </CardHeaderAvatar>
-        <CardHeaderContent>
-            @* <MudText Typo="Typo.body1">User name</MudText> *@
-            <MudText Typo="Typo.body1">@PostDto.Creator.UserName</MudText>
-        </CardHeaderContent>
-    </MudCardHeader>
-    @* photo uploaded to azure storage, got from: https://picsum.photos/ *@
-    @* <MudCardMedia Image="https://anax.blob.core.windows.net/test/24d738d3-3da9-4e7d-a992-0d5dbb916415.png" Height="250"/> *@
-    <MudCardMedia Image="@PostDto.PhotoData" Height="250"/>
-    <MudCardContent>
-        @if (PostDto.Description != null)
-        {
-            @* <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText> *@
-            <MudText Typo="Typo.body2">@PostDto.Description</MudText>
-        }
-        else
-        {
-            <MudText Typo="Typo.body2" Color="Color.Error">This post doesn't have a description</MudText>
-        }
-    </MudCardContent>
-    <MudCardActions>
-        <MudContainer Class="text-center">
-            <MudText Class="fw-bold">Likes:</MudText><MudText>@PostDto.Likes</MudText>
-            <MudIconButton Icon="@Icons.Material.Filled.AddComment" Color="Color.Default" OnClick="ShowCommentDialog"/>
-        </MudContainer>
-        <MudContainer Class="justify-content-around">
-            @foreach (var emote in PostDto.Emotes)
+@if (!_loading)
+{
+    @* based on: https://www.mudblazor.com/components/card#combined *@
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderAvatar>
+                @* <MudAvatar Color="Color.Secondary">I</MudAvatar> *@
+                <MudAvatar Color="Color.Secondary">@PostDto.Creator.UserName[0]</MudAvatar>
+            </CardHeaderAvatar>
+            <CardHeaderContent>
+                @* <MudText Typo="Typo.body1">User name</MudText> *@
+                <MudText Typo="Typo.body1">@PostDto.Creator.UserName</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        @* photo uploaded to azure storage, got from: https://picsum.photos/ *@
+        @* <MudCardMedia Image="https://anax.blob.core.windows.net/test/24d738d3-3da9-4e7d-a992-0d5dbb916415.png" Height="250"/> *@
+        <MudCardMedia Image="@PostDto.PhotoData" Height="250"/>
+        <MudCardContent>
+            @if (PostDto.Description != null)
             {
-                <MudBadge Content="@emote.Count" Overlap="true" Class="mx-6 my-4">
-                    <MudButton Style="@(ActiveEmote(emote.UserIds) ? _addedEmote : _notAddedEmote)" OnClick="(() => ToggleEmote(emote.Id))">@emote.Value</MudButton>
-                </MudBadge>
+                @* <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText> *@
+                <MudText Typo="Typo.body2">@PostDto.Description</MudText>
             }
-            @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
-            @*     <MudButton>❤️</MudButton> *@
-            @* </MudBadge> *@
-            @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
-            @*     <MudButton>😊</MudButton> *@
-            @* </MudBadge> *@
-            @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
-            @*     <MudButton>🤣</MudButton> *@
-            @* </MudBadge> *@
-            @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
-            @*     <MudButton>😍</MudButton> *@
-            @* </MudBadge> *@
-            @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
-            @*     <MudButton>👍</MudButton> *@
-            @* </MudBadge> *@
-        </MudContainer>
-    </MudCardActions>
-    @if (ShowMore)
-    {
-        <MudContainer Class="text-center">
-            <MudIconButton Icon="@Icons.Material.Filled.MoreHoriz" Color="Color.Default" OnClick="ShowPostWithComments"/>
-        </MudContainer>
-    }
-</MudCard>
+            else
+            {
+                <MudText Typo="Typo.body2" Color="Color.Error">This post doesn't have a description</MudText>
+            }
+        </MudCardContent>
+        <MudCardActions>
+            <MudContainer Class="text-center">
+                <MudText Class="fw-bold">Likes:</MudText>
+                <MudText>@PostDto.Likes</MudText>
+                <MudIconButton Icon="@Icons.Material.Filled.AddComment" Color="Color.Default"
+                               OnClick="CheckLoginBeforeComment"/>
+            </MudContainer>
+            <MudContainer Class="justify-content-around">
+                @foreach (var emote in PostDto.Emotes)
+                {
+                    <MudBadge Content="@emote.Count" Overlap="true" Class="mx-6 my-4">
+                        <MudButton Style="@(ActiveEmote(emote.UserIds) ? _addedEmote : _notAddedEmote)"
+                                   OnClick="() => CheckLoginBeforeToggleEmote(emote.Id)">@emote.Value</MudButton>
+                    </MudBadge>
+                }
+                @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
+                @*     <MudButton>❤️</MudButton> *@
+                @* </MudBadge> *@
+                @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
+                @*     <MudButton>😊</MudButton> *@
+                @* </MudBadge> *@
+                @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
+                @*     <MudButton>🤣</MudButton> *@
+                @* </MudBadge> *@
+                @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
+                @*     <MudButton>😍</MudButton> *@
+                @* </MudBadge> *@
+                @* <MudBadge Content="3" Overlap="true" Class="mx-6 my-4"> *@
+                @*     <MudButton>👍</MudButton> *@
+                @* </MudBadge> *@
+            </MudContainer>
+        </MudCardActions>
+        @if (ShowMore)
+        {
+            <MudContainer Class="text-center">
+                <MudIconButton Icon="@Icons.Material.Filled.MoreHoriz" Color="Color.Default"
+                               OnClick="ShowPostWithComments"/>
+            </MudContainer>
+        }
+    </MudCard>
+}
 
 @code {
     [Parameter] public PostDto PostDto { get; set; }
@@ -76,7 +83,22 @@
 
     private readonly DialogOptions _postDialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center, CloseOnEscapeKey = true };
 
-    private readonly DialogOptions _commentDialogOptions = new() { CloseButton = true, MaxWidth = MaxWidth.Medium, Position = DialogPosition.Center, CloseOnEscapeKey = true };
+    private readonly DialogOptions _commentDialogOptions = new() { CloseButton = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center, CloseOnEscapeKey = true };
+
+    private CurrentUser _currentUser;
+
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await LocalStorage.ContainKeyAsync("user"))
+        {
+            _currentUser = await LocalStorage.GetItemAsync<CurrentUser>("user");
+        }
+
+        _loading = false;
+    }
+
 
     private async Task ShowPostWithComments()
     {
@@ -91,59 +113,69 @@
 
     private bool ActiveEmote(List<Guid> userIds)
     {
-        return CurrentUser?.UserId != null && userIds.Contains(CurrentUser.UserId);
+        var isActive = _currentUser?.UserId != null && userIds.Contains(_currentUser.UserId);
+        return isActive;
     }
 
-    private async Task ShowCommentDialog()
+    private async Task CheckLoginBeforeComment()
     {
-        // TODO: split into two functions maybe?
-        if (CurrentUser.UserName == string.Empty)
+        Console.WriteLine(_currentUser);
+        if (_currentUser.UserId == Guid.Empty)
         {
             var loginParameters = new DialogParameters<MustLoginDialog>()
             {
                 { x => x.Action, "comment the post." }
             };
 
-            var loginDialog = DialogService.Show<MustLoginDialog>("", loginParameters);
+            var loginDialog = await DialogService.ShowAsync<MustLoginDialog>("", loginParameters);
 
             var loginResult = await loginDialog.Result;
 
-            if (loginResult!.Canceled)
+            if (loginResult?.Data is not bool value) return;
+            if (value)
             {
-                return;
+                NavigationManager.NavigateTo("/Login");
             }
 
-            NavigationManager.NavigateTo("/Login");
+            return;
         }
 
+        await ShowCommentDialog();
+    }
+
+    private async Task ShowCommentDialog()
+    {
         var parameters = new DialogParameters<AddCommentDialog>
         {
-            { x => x.PostId, PostDto.Id}
+            { x => x.PostId, PostDto.Id }
         };
 
-        var dialog = DialogService.Show<AddCommentDialog>("Add new comment", parameters, _commentDialogOptions);
+        var dialog = await DialogService.ShowAsync<AddCommentDialog>("Add new comment", parameters, _commentDialogOptions);
 
         var result = await dialog.Result;
 
-        if (!result!.Canceled)
+        if (result!.Canceled)
         {
-            if (result.Data is CommentDto commentDto)
-            {
-                PostDto.Comments.Add(commentDto);
-            }
-            else
-            {
-                Snackbar.Add("Internal error with adding new comment. Contact administrator.", Severity.Error);
-            }
+            return;
+        }
+
+        if (result.Data is CommentDto commentDto)
+        {
+            PostDto.Comments.Add(commentDto);
+            StateHasChanged();
+        }
+        else
+        {
+            Snackbar.Add("Internal error with adding new comment. Contact administrator.", Severity.Error);
         }
     }
 
-    private async Task ToggleEmote(Guid emoteId)
+    private async Task CheckLoginBeforeToggleEmote(Guid emoteId)
     {
-
-        if (CurrentUser.UserName == string.Empty)
+        Console.WriteLine(_currentUser);
+        if (_currentUser.UserId == Guid.Empty)
         {
-            var loginParameters = new DialogParameters<MustLoginDialog>()
+            var loginParameters = new DialogParameters<MustLoginDialog>
             {
                 { x => x.Action, "change emote to the post." }
             };
@@ -152,14 +184,20 @@
 
             var loginResult = await loginDialog.Result;
 
-            if (loginResult.Canceled)
+            if (loginResult?.Data is not bool value) return;
+            if (value)
             {
-                return;
+                NavigationManager.NavigateTo("/Login");
             }
 
-            NavigationManager.NavigateTo("/Login");
+            return;
         }
 
+        await ToggleEmote(emoteId);
+    }
+
+    private async Task ToggleEmote(Guid emoteId)
+    {
         var emote = PostDto.Emotes.FirstOrDefault(e => e.Id == emoteId);
 
         if (emote == null)
@@ -172,12 +210,12 @@
         {
             EmoteId = emoteId,
             PostId = PostDto.Id,
-            UserId = CurrentUser.UserId
+            UserId = _currentUser.UserId
         };
 
         var path = $"{Utils.API_URL}/emote/";
 
-        var contains = emote.UserIds.Contains(CurrentUser.UserId);
+        var contains = emote.UserIds.Contains(_currentUser.UserId);
 
         path += contains ? "remove" : "add";
 
@@ -191,16 +229,15 @@
             return;
         }
 
-        if (contains)
-        {
-            emote.UserIds.Remove(CurrentUser.UserId);
-        }
-        else
-        {
-            emote.UserIds.Add(CurrentUser.UserId);
-        }
+        emote.UserIds = contains ?
+            emote.UserIds.Where(id => id != _currentUser.UserId).ToList() :
+            emote.UserIds.Append(_currentUser.UserId).ToList();
 
-        await InvokeAsync(StateHasChanged);
+        emote.UserIds = [..emote.UserIds];
+        emote.Count = emote.UserIds.Count;
+
+        StateHasChanged();
+        Console.WriteLine("StateHasChanged");
     }
 
 }

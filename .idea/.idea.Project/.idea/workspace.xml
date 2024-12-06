@@ -17,43 +17,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3f7ced9-e2a5-4d68-bd66-a7ad5339ed6f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Project.Client/Dialogs/MustLoginDialog.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Client/Models/CurrentUser.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Database/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Database/AppDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Migrations/20241118155705_Initial.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Migrations/20241118155705_Initial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Migrations/20241123100639_EmotesSeed.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Migrations/20241123100639_EmotesSeed.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Migrations/20241123110721_AddedCommentDateTime.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Migrations/20241123110721_AddedCommentDateTime.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Migrations/AppDbContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Models/Comment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Models/Comment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Models/PostEmote.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Models/PostEmote.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Project.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Project.API.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.API/Services/Comment/CommentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/Comment/CommentService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.API/Services/EmoteService/EmoteService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/EmoteService/EmoteService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/FileService/AzureFileService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/FileService/AzureFileService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/FileService/IFileService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/FileService/IFileService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/FileService/LocalFileService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/FileService/LocalFileService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.API/Services/PostService/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/PostService/PostService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Components/AnnonymousMenuComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/AnnonymousMenuComponent.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Components/Comment.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/Comment.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Services/UserService/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/UserService/UserService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Components/LoggedMenuComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/LoggedMenuComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Components/Notifications.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/Notifications.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Components/Post.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/Post.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Components/SimplePostComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/SimplePostComponent.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Dialogs/AddCommentDialog.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Dialogs/AddCommentDialog.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Dialogs/PostDialog.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Dialogs/PostDialog.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Layout/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Layout/MainLayout.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Dialogs/MustLoginDialog.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Dialogs/MustLoginDialog.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Layout/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Layout/NavMenu.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Form.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Form.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Home.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Home.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Login.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Login.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Logout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Logout.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Profile.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Profile.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Register.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Register.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Services/CurrentUser.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/_Imports.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,26 +57,10 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/36af73a990fe4e92a7fe348f070581f68b8e00/29/5a8de6ec/MudNavLink.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Database/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Migrations/AppDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Models/Comment.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/Comment/CommentService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/PostService/PostService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/CheckLogged.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/Comment.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/LoggedMenuComponent.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/Post.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/Post.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Layout/NavMenu.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Pages/Form.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Pages/Home.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Pages/Login.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Pages/Logout.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Pages/Register.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Services/EventAggregator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/AnnonymousMenuComponent.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Dialogs/AddCommentDialog.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Project.Client/wwwroot/css/bootstrap/bootstrap.min.css.map" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Shared/Responses/BaseResponse.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -409,7 +376,8 @@
       <workItem from="1732355352903" duration="4870000" />
       <workItem from="1733052083480" duration="8936000" />
       <workItem from="1733403744397" duration="1368000" />
-      <workItem from="1733420976168" duration="6353000" />
+      <workItem from="1733420976168" duration="6530000" />
+      <workItem from="1733495895618" duration="6674000" />
     </task>
     <task id="LOCAL-00001" summary="project skeleton with cors">
       <option name="closed" value="true" />
@@ -491,7 +459,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732360310631</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Lots of work.">
+      <option name="closed" value="true" />
+      <created>1733429027913</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1733429027913</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -511,7 +487,8 @@
     <MESSAGE value="migrations, forgot" />
     <MESSAGE value="ui changes, some bugfixes in Program.cs, added user Profile.razor page" />
     <MESSAGE value="implemented dialog for adding comment, modified comment by adding DateTime, changes in services, migrations" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented dialog for adding comment, modified comment by adding DateTime, changes in services, migrations" />
+    <MESSAGE value="Lots of work." />
+    <option name="LAST_COMMIT_MESSAGE" value="Lots of work." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

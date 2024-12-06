@@ -1,4 +1,4 @@
-﻿@inject ICurrentUser CurrentUser
+﻿@inject ILocalStorageService LocalStorage
 @inject HttpClient Http
 @inject ISnackbar Snackbar
 
@@ -16,7 +16,14 @@
     [Parameter]
     public Guid PostId { get; set; }
 
+    private CurrentUser _currentUser;
+
     private readonly AddCommentRequest _request = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _currentUser = await LocalStorage.GetItemAsync<CurrentUser>("user");
+    }
 
     private async Task SendComment()
     {
@@ -27,7 +34,7 @@
         }
 
         _request.PostId = PostId;
-        _request.SenderId = CurrentUser.UserId;
+        _request.SenderId = _currentUser.UserId;
 
         var response = await Http.PostAsJsonAsync($"{Utils.API_URL}/comment", _request);
 
@@ -46,8 +53,8 @@
             Time = content.Time,
             User = new UserDto
             {
-                Id = CurrentUser.UserId,
-                UserName = CurrentUser.UserName
+                Id = _currentUser.UserId,
+                UserName = _currentUser.UserName
             },
             Value = _request.CommentData
         }));

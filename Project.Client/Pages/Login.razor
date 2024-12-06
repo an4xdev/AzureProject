@@ -3,7 +3,6 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @inject ILocalStorageService LocalStorage
-@inject ICurrentUser CurrentUser
 @inject EventAggregator EventAggregator
 @inject ISnackbar Snackbar
 
@@ -35,11 +34,14 @@
 
         Snackbar.Add("Successfully logged.", Severity.Success);
 
-        CurrentUser.UserId = content.UserId;
-        CurrentUser.Email = _request.Email;
-        CurrentUser.UserName = content.UserName;
+        var currentUser = new CurrentUser
+        {
+            UserId = content.UserId,
+            Email = _request.Email,
+            UserName = content.UserName
+        };
 
-        await LocalStorage.SetItemAsync("user", CurrentUser);
+        await LocalStorage.SetItemAsync("user", currentUser);
 
         EventAggregator.Publish("logged");
 

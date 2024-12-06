@@ -23,7 +23,7 @@ public class EmoteService(AppDbContext context) :IEmoteService
         if (post == null)
         {
             response.IsSuccessful = false;
-            response.Message = "Unknown post.";
+            response.Message = "Unknown post. No post in system.";
             return await Task.FromResult(response);
         }
 
@@ -32,7 +32,7 @@ public class EmoteService(AppDbContext context) :IEmoteService
         if (user == null)
         {
             response.IsSuccessful = false;
-            response.Message = "Unknown user.";
+            response.Message = "Unknown user. No user in system.";
             return await Task.FromResult(response);
         }
 
@@ -40,11 +40,11 @@ public class EmoteService(AppDbContext context) :IEmoteService
         if (emote == null)
         {
             response.IsSuccessful = false;
-            response.Message = "Unknown emote";
+            response.Message = "Unknown emote. No emote in system.";
             return await Task.FromResult(response);
         }
 
-        var postEmote = new PostEmote()
+        var postEmote = new PostEmote
         {
             EmoteId = emote.Id,
             Emote = emote,
@@ -69,7 +69,7 @@ public class EmoteService(AppDbContext context) :IEmoteService
         if (post == null)
         {
             response.IsSuccessful = false;
-            response.Message = "Unknown post.";
+            response.Message = "Unknown post. No post in system.";
             return await Task.FromResult(response);
         }
 
@@ -78,7 +78,7 @@ public class EmoteService(AppDbContext context) :IEmoteService
         if (user == null)
         {
             response.IsSuccessful = false;
-            response.Message = "Unknown user.";
+            response.Message = "Unknown user. No user in system.";
             return await Task.FromResult(response);
         }
 
@@ -86,18 +86,18 @@ public class EmoteService(AppDbContext context) :IEmoteService
         if (emote == null)
         {
             response.IsSuccessful = false;
-            response.Message = "Unknown emote";
+            response.Message = "Unknown emote. No emote in system.";
             return await Task.FromResult(response);
         }
 
         var postEmote = await context.PostEmotes
-            .Where(pe => pe.EmoteId == emote.Id && pe.UserId == user.Id && pe.PostId == post.UserId)
+            .Where(pe => pe.EmoteId == emote.Id && pe.UserId == user.Id && pe.PostId == post.Id)
             .FirstOrDefaultAsync();
 
         if (postEmote == null)
         {
             response.IsSuccessful = false;
-            response.Message = "No emote.";
+            response.Message = "No emote. No correlation in system";
             return await Task.FromResult(response);
         }
 
@@ -128,6 +128,7 @@ public class EmoteService(AppDbContext context) :IEmoteService
 
             emoteDtos.Add(new EmoteDto
             {
+                Id = e.Id,
                 Value = e.Emoji,
                 Count = count,
                 UserIds = users

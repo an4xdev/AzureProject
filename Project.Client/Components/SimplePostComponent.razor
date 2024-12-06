@@ -1,7 +1,7 @@
 ﻿@using System.Text
 @using System.Text.Json
 @inject HttpClient Http
-@inject ICurrentUser CurrentUser
+@inject ILocalStorageService LocalStorage
 @inject ISnackbar SnackBar
 <MudCard>
     @* photo uploaded to azure storage, got from: https://picsum.photos/ *@
@@ -34,12 +34,19 @@
     [Parameter]
     public EventCallback<Guid> OnDelete { get; set; }
 
+    private CurrentUser _currentUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _currentUser = await LocalStorage.GetItemAsync<CurrentUser>("user");
+    }
+
     private async Task DeletePost()
     {
         var request = new DeletePostRequest
         {
             PostId = PostDto.Id,
-            UserId = CurrentUser.UserId
+            UserId = _currentUser.UserId
         };
 
         // var response = await Http.DeleteFromJsonAsync<BaseResponse>("post", DeletePostRequest);

@@ -23,7 +23,7 @@ public class CommentService(AppDbContext context) : ICommentService
         if (post == null)
         {
             response.IsSuccessful = false;
-            response.Message = "Unknown post.";
+            response.Message = "Unknown post. No post in system.";
             return await Task.FromResult(response);
         }
 
@@ -32,7 +32,7 @@ public class CommentService(AppDbContext context) : ICommentService
         if (user == null)
         {
             response.IsSuccessful = false;
-            response.Message = "Unknown user.";
+            response.Message = "Unknown user. No user in system.";
             return await Task.FromResult(response);
         }
 

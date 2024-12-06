@@ -138,7 +138,7 @@ public class PostService(
         if (post == null)
         {
             response.IsSuccessful = false;
-            response.Message = "Unknown post to edit";
+            response.Message = "Unknown post to edit. No post in system.";
             return await Task.FromResult(response);
         }
 
@@ -163,7 +163,7 @@ public class PostService(
         if (post == null)
         {
             response.IsSuccessful = false;
-            response.Message = "Unknown post to delete.";
+            response.Message = "Unknown post to delete. No post in system.";
             return await Task.FromResult(response);
         }
 

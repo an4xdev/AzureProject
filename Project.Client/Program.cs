@@ -12,7 +12,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddMudServices();
 
-builder.Services.AddSingleton<ICurrentUser, CurrentUser>();
 builder.Services.AddSingleton<EventAggregator>();
 
 builder.Services.AddBlazoredLocalStorageAsSingleton();

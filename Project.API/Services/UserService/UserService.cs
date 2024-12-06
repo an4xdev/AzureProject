@@ -32,8 +32,6 @@ public class UserService(AppDbContext context, ITopicService topicService) : IUs
         response.UserId = user.Id;
         response.UserName = user.Name;
 
-        await topicService.SendMessage($"User: {user.Name} just logged.");
-
         return await Task.FromResult(response);
     }
 

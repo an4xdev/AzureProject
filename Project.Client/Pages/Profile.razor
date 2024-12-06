@@ -3,7 +3,7 @@
 <CheckLogged/>
 
 @inject HttpClient Http
-@inject ICurrentUser CurrentUser
+@inject ILocalStorageService LocalStorage
 
 <PageTitle>Your profile</PageTitle>
 
@@ -41,18 +41,17 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _posts = await Http.GetFromJsonAsync<List<SimplePostDto>>($"{Utils.API_URL}/post/{CurrentUser.UserId}");
+        var task = await LocalStorage.GetItemAsync<CurrentUser>("user");
+        _posts = await Http.GetFromJsonAsync<List<SimplePostDto>>($"{Utils.API_URL}/post/{task.UserId}");
         _loading = false;
     }
 
-    private async Task HandleDelete(Guid postId)
+    private void HandleDelete(Guid postId)
     {
         var itemToRemove = _posts?.FirstOrDefault(p => p.Id == postId);
-        if (itemToRemove != null)
-        {
-            _posts?.Remove(itemToRemove);
-            await InvokeAsync(StateHasChanged);
-        }
+        if (itemToRemove == null) return;
+        _posts?.Remove(itemToRemove);
+        StateHasChanged();
     }
 
 }

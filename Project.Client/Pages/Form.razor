@@ -3,7 +3,7 @@
 <CheckLogged/>
 
 @inject HttpClient Http
-@inject ICurrentUser CurrentUser
+@inject ILocalStorageService LocalStorage
 @inject ISnackbar Snackbar
 
 <PageTitle>Add new post</PageTitle>
@@ -62,12 +62,22 @@
 </MudContainer>
 
 @code {
+
+    // TODO: EDIT POST
+
     private readonly PostRequest _request = new();
 
     private MudFileUpload<IBrowserFile>? _fileUpload;
     private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full";
     private string _dragClass = DefaultDragClass;
     private string _fileName = string.Empty;
+
+    private CurrentUser _currentUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _currentUser = await LocalStorage.GetItemAsync<CurrentUser>("user");
+    }
 
     private async Task SendPost()
     {
@@ -77,7 +87,7 @@
             return;
         }
 
-        _request.UserId = CurrentUser.UserId;
+        _request.UserId = _currentUser.UserId;
 
 
         var responseMessage = await Http.PostAsJsonAsync($"{Utils.API_URL}/post", _request);
@@ -115,7 +125,7 @@
         var stream = files[0].OpenReadStream();
 
         using var memoryStream = new MemoryStream();
-        await stream?.CopyToAsync(memoryStream)!;
+        await stream.CopyToAsync(memoryStream)!;
 
         var fileBytes = memoryStream.ToArray();
         var base64String = Convert.ToBase64String(fileBytes);
