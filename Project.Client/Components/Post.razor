@@ -39,6 +39,8 @@
                 <MudIconButton Icon="@Icons.Material.Filled.AddComment" Color="Color.Default"
                                OnClick="CheckLoginBeforeComment"/>
             </MudContainer>
+        </MudCardActions>
+        <MudCardActions>
             <MudContainer Class="justify-content-around">
                 @foreach (var emote in PostDto.Emotes)
                 {
@@ -78,8 +80,8 @@
     [Parameter] public PostDto PostDto { get; set; }
     [Parameter] public bool ShowMore { get; set; }
 
-    private readonly string _addedEmote = "border:1px solid green;";
-    private readonly string _notAddedEmote = "border:1px solid black;";
+    private readonly string _addedEmote = "border:2px solid green;";
+    private readonly string _notAddedEmote = "border:2px solid black;";
 
     private readonly DialogOptions _postDialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center, CloseOnEscapeKey = true };
 
@@ -213,7 +215,7 @@
             UserId = _currentUser.UserId
         };
 
-        var path = $"{Utils.API_URL}/emote/";
+        var path = $"/emote/";
 
         var contains = emote.UserIds.Contains(_currentUser.UserId);
 

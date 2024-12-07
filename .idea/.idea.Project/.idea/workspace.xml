@@ -17,26 +17,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3f7ced9-e2a5-4d68-bd66-a7ad5339ed6f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Project.Client/Models/CurrentUser.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project.Client/Services/TopicService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/Comment/CommentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/Comment/CommentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.API/Services/EmoteService/EmoteService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/EmoteService/EmoteService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/PostService/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/PostService/PostService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/UserService/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/UserService/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Components/LoggedMenuComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/LoggedMenuComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Services/FileService/AzureFileService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/FileService/AzureFileService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/Services/Topic/TopicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/Topic/TopicService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Components/Notifications.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/Notifications.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Components/Post.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/Post.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Components/SimplePostComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/SimplePostComponent.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Dialogs/AddCommentDialog.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Dialogs/AddCommentDialog.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Dialogs/MustLoginDialog.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Dialogs/MustLoginDialog.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Layout/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Layout/NavMenu.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Dialogs/PostDialog.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Dialogs/PostDialog.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Form.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Form.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Home.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Home.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Login.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Login.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Logout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Logout.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Profile.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Profile.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Register.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Register.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Services/CurrentUser.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.Client/Utils/Utils.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Project.Client/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/_Imports.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,15 +52,23 @@
   <component name="DpaMonitoringSettings">
     <option name="firstShow" value="false" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/36af73a990fe4e92a7fe348f070581f68b8e00/29/5a8de6ec/MudNavLink.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Database/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/PostService/PostService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/AnnonymousMenuComponent.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/Notifications.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Dialogs/AddCommentDialog.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Dialogs/AddCommentDialog.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Dialogs/PostDialog.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Pages/Form.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Project.Client/wwwroot/css/bootstrap/bootstrap.min.css.map" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -76,26 +85,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.Project.API: https.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.Project.Client: https.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.Project.API/Dockerfile.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.Project.Client/Dockerfile.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.Project.API: https.executor": "Run",
+    ".NET Launch Settings Profile.Project.Client: https.executor": "Run",
+    "Docker.Project.API/Dockerfile.executor": "Run",
+    "Docker.Project.Client/Dockerfile.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Project.Client: https">
     <configuration name="Project.API: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Project.API/Project.API.csproj" />
@@ -321,11 +331,16 @@
     <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
+          <option name="envFilePath" value="" />
           <option name="sourceFilePath" value="docker-compose.yml" />
         </settings>
       </deployment>
       <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
-      <method v="2" />
+      <method v="2">
+        <option name="ConnectionRunnerForConfigurationId">
+          <option name="envFile" value="D:\PROGRAMOWANIE\CHMURA\Project\.env" />
+        </option>
+      </method>
     </configuration>
     <list>
       <item itemvalue=".NET Launch Settings Profile.Project.API: http" />
@@ -377,7 +392,8 @@
       <workItem from="1733052083480" duration="8936000" />
       <workItem from="1733403744397" duration="1368000" />
       <workItem from="1733420976168" duration="6530000" />
-      <workItem from="1733495895618" duration="6674000" />
+      <workItem from="1733495895618" duration="7009000" />
+      <workItem from="1733588725824" duration="8792000" />
     </task>
     <task id="LOCAL-00001" summary="project skeleton with cors">
       <option name="closed" value="true" />
@@ -467,7 +483,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733429027913</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="removed CurrentUser, modified API error messages, tested toggling emotes, fixes modals to add comment and toggle emote when user isn't logged">
+      <option name="closed" value="true" />
+      <created>1733502950338</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1733502950338</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -488,7 +512,8 @@
     <MESSAGE value="ui changes, some bugfixes in Program.cs, added user Profile.razor page" />
     <MESSAGE value="implemented dialog for adding comment, modified comment by adding DateTime, changes in services, migrations" />
     <MESSAGE value="Lots of work." />
-    <option name="LAST_COMMIT_MESSAGE" value="Lots of work." />
+    <MESSAGE value="removed CurrentUser, modified API error messages, tested toggling emotes, fixes modals to add comment and toggle emote when user isn't logged" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed CurrentUser, modified API error messages, tested toggling emotes, fixes modals to add comment and toggle emote when user isn't logged" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

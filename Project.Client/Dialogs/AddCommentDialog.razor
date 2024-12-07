@@ -36,7 +36,7 @@
         _request.PostId = PostId;
         _request.SenderId = _currentUser.UserId;
 
-        var response = await Http.PostAsJsonAsync($"{Utils.API_URL}/comment", _request);
+        var response = await Http.PostAsJsonAsync($"/comment", _request);
 
         var content = await response.Content.ReadFromJsonAsync<AddCommentResponse>();
 

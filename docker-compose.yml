@@ -25,6 +25,9 @@
     restart: always
     environment:
       - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
+      - STORAGE_KEY=${STORAGE_KEY}
+      - TOPIC_KEY=${TOPIC_KEY}
+      - TOPIC_NAME=${TOPIC_NAME}
 
   project.client:
     build:

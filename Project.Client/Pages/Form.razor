@@ -90,7 +90,7 @@
         _request.UserId = _currentUser.UserId;
 
 
-        var responseMessage = await Http.PostAsJsonAsync($"{Utils.API_URL}/post", _request);
+        var responseMessage = await Http.PostAsJsonAsync($"/post", _request);
         var content = await responseMessage.Content.ReadFromJsonAsync<BaseResponse>();
 
         if (!content!.IsSuccessful)

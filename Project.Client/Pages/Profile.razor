@@ -7,33 +7,43 @@
 
 <PageTitle>Your profile</PageTitle>
 
-@switch (_posts)
-{
-    case null when _loading:
-        <MudText>Loading...</MudText>
-        break;
-    case null when !_loading:
-        <div class="text-center">
-            <MudText Typo="Typo.h6">You dont have any posts. Maybe add someone?</MudText>
-            <MudLink Href="/Form" Color="Color.Secondary" Underline="Underline.Hover" Class="m-2"><MudIconButton Icon="@Icons.Material.Filled.Add"/></MudLink>
-        </div>
-        break;
-    default:
+<MudContainer MaxWidth="MaxWidth.Small" Class="py-4">
+
+    @switch (_posts)
     {
-        if (_posts != null)
+        case null when _loading:
+            <MudText>Loading...</MudText>
+            break;
+        case null when !_loading:
+            <div class="text-center">
+                <MudText Typo="Typo.h5">You dont have any posts. Maybe add someone?</MudText>
+                <MudLink Href="/Form" Color="Color.Secondary" Underline="Underline.Hover" Class="m-2"><MudIconButton Icon="@Icons.Material.Filled.Add"/></MudLink>
+            </div>
+            break;
+        default:
         {
-            foreach (var post in _posts)
+            if (_posts != null)
             {
-                <SimplePostComponent PostDto="post" OnDelete="HandleDelete"/>
+                <div class="text-center">
+                    <MudText Typo="Typo.h5">Add new post</MudText>
+                    <MudLink Href="/Form" Color="Color.Secondary" Underline="Underline.Hover" Class="m-2"><MudIconButton Icon="@Icons.Material.Filled.Add"/></MudLink>
+                </div>
+                foreach (var post in _posts)
+                {
+                    <div class="my-3">
+                        <SimplePostComponent PostDto="post" OnDelete="HandleDelete"/>
+                    </div>
+                }
             }
+            else
+            {
+                <MudText>Something went wrong please contact administrator.</MudText>
+            }
+            break;
         }
-        else
-        {
-            <MudText>Something went wrong please contact administrator.</MudText>
-        }
-        break;
     }
-}
+
+</MudContainer>
 
 @code {
     private List<SimplePostDto>? _posts;
@@ -42,7 +52,7 @@
     protected override async Task OnInitializedAsync()
     {
         var task = await LocalStorage.GetItemAsync<CurrentUser>("user");
-        _posts = await Http.GetFromJsonAsync<List<SimplePostDto>>($"{Utils.API_URL}/post/{task.UserId}");
+        _posts = await Http.GetFromJsonAsync<List<SimplePostDto>>($"/post/{task.UserId}");
         _loading = false;
     }
 

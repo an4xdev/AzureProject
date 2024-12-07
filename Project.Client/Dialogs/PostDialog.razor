@@ -1,20 +1,27 @@
 ﻿<MudDialog>
     <DialogContent>
-        <Post ShowMore="ShowMore" PostDto="PostDto"/>
-        @foreach (var comment in PostDto.Comments)
-        {
-            <Comment CommentDto="comment"/>
-        }
+        <div class="d-flex">
+            <div>
+                <Post ShowMore="ShowMore" PostDto="PostDto"/>
+            </div>
+            <div>
+                <div class="comments-container">
+                    @foreach (var comment in PostDto.Comments)
+                    {
+                        <Comment CommentDto="comment"/>
+                    }
+                </div>
+            </div>
+        </div>
+
     </DialogContent>
 </MudDialog>
-@code {
-    [CascadingParameter]
-    private MudDialogInstance MudDialog { get; set; }
 
-    [Parameter]
-    public PostDto PostDto { get; set; }
-    [Parameter]
-    public bool ShowMore { get; set; }
+@code {
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public PostDto PostDto { get; set; }
+    [Parameter] public bool ShowMore { get; set; }
 
     protected override void OnInitialized()
     {

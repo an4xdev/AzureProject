@@ -53,7 +53,7 @@
         var response = await Http.SendAsync(new HttpRequestMessage
         {
             Method = HttpMethod.Delete,
-            RequestUri = new Uri($"{Utils.API_URL}/post"),
+            RequestUri = new Uri($"/post"),
             Content = new StringContent(JsonSerializer.Serialize(request),
                 Encoding.UTF8,
                 "application/json")

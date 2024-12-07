@@ -4,7 +4,7 @@
 
 <PageTitle>Home</PageTitle>
 
-<MudContainer MaxWidth="MaxWidth.Medium" Class="py-4">
+<MudContainer MaxWidth="MaxWidth.Small" Class="py-4">
 
     <div class="text-center">
         <MudText Typo="Typo.h5">Add new post</MudText>
@@ -36,7 +36,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _posts = await Http.GetFromJsonAsync<List<PostDto>>($"{Utils.API_URL}/post") ?? [];
+        _posts = await Http.GetFromJsonAsync<List<PostDto>>($"/post") ?? [];
     }
 
 }

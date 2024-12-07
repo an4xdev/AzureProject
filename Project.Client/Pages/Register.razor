@@ -29,7 +29,7 @@
 
     private async Task RegisterClicked()
     {
-        var response = await Http.PostAsJsonAsync($"{Utils.API_URL}/user/register", _request);
+        var response = await Http.PostAsJsonAsync($"/user/register", _request);
         var content = await response.Content.ReadFromJsonAsync<BaseResponse>();
 
         if (!content!.IsSuccessful)

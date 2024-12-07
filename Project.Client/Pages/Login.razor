@@ -23,7 +23,7 @@
 
     private async Task LoginClicked()
     {
-        var response = await Http.PostAsJsonAsync($"{Utils.API_URL}/user/login", _request);
+        var response = await Http.PostAsJsonAsync($"/user/login", _request);
         var content = await response.Content.ReadFromJsonAsync<LoginResponse>();
 
         if (!content!.IsSuccessful)

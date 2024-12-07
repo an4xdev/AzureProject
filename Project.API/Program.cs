@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Project.API.Database;
 using Project.API.Services.Comment;
 using Project.API.Services.EmoteService;
@@ -15,10 +14,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// builder.Services.AddSqlServer<AppDbContext>(builder.Configuration.GetConnectionString("DefaultConnection"));
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
+                       ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSqlServer<AppDbContext>(connectionString);
 
 builder.Services.AddCors(options =>
 {

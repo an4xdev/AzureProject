@@ -1,10 +1,12 @@
 ﻿using Azure.Storage.Blobs;
-using Project.Shared.DoNotGit;
 
 namespace Project.API.Services.FileService;
 
 public class AzureFileService : IFileService
 {
+
+    private readonly string _storageKey = Environment.GetEnvironmentVariable("STORAGE_KEY") ?? "";
+
     public async Task<string> Upload(string imageData, string fileExtension)
     {
         var uploadFileName = Guid.NewGuid() + fileExtension;
@@ -12,7 +14,7 @@ public class AzureFileService : IFileService
         var fileBytes = Convert.FromBase64String(imageData);
         var stream = new MemoryStream(fileBytes);
 
-        BlobServiceClient blobServiceClient = new(DontCommit.StorageKey);
+        BlobServiceClient blobServiceClient = new(_storageKey);
 
         var containerClient = blobServiceClient.GetBlobContainerClient("test");
 
@@ -28,7 +30,7 @@ public class AzureFileService : IFileService
         var fileBytes = Convert.FromBase64String(imageData);
         var stream = new MemoryStream(fileBytes);
 
-        BlobServiceClient blobServiceClient = new(DontCommit.StorageKey);
+        BlobServiceClient blobServiceClient = new(_storageKey);
 
         var containerClient = blobServiceClient.GetBlobContainerClient("test");
 

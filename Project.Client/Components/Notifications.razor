@@ -2,11 +2,12 @@
 @inject IDialogService DialogService
 @inject ISnackbar Snackbar
 @inject ILocalStorageService LocalStorage
+@inject TopicService TopicService
 
 <MudBadge Content="@_receivedMessages.Count" Overlap="true" Class="mx-6 my-4">
-    <MudIcon
-        Icon="@(AreNotifications ? Icons.Material.Filled.NotificationsActive : Icons.Material.Filled.Notifications)" Disabled="@(!AreNotifications)"/>
+    <MudIconButton Icon="@(AreNotifications ? Icons.Material.Filled.NotificationsActive : Icons.Material.Filled.Notifications)" Disabled="@(!AreNotifications)" OnClick="ShowDialog"/>
 </MudBadge>
+
 
 @code {
 
@@ -14,19 +15,26 @@
 
     private bool AreNotifications { get; set; }
 
-    private readonly List<string> _receivedMessages = [];
+    private List<string> _receivedMessages = [];
 
     private ServiceBusClient _client = null!;
     private ServiceBusProcessor _processor = null!;
 
     private readonly DialogOptions _dialogOptions = new() { CloseButton = true, NoHeader = true, MaxWidth = MaxWidth.Medium, Position = DialogPosition.TopRight, CloseOnEscapeKey = true };
 
-    protected override void OnInitialized()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        base.OnInitialized();
-        EventAggregator.Subscribe("logged", StartProcessing);
-        EventAggregator.Subscribe("NotifCleared", Clear);
+        if (firstRender)
+        {
+            Console.WriteLine("OnAfterRender");
+            EventAggregator.Subscribe("logged", StartProcessing);
+            // TODO: remove event and give callback to dialog
+            EventAggregator.Subscribe("NotifCleared", Clear);
+            Console.WriteLine("Subscribed to events");
+            await StartProcessing();
+        }
     }
+
 
     private async Task ShowDialog()
     {
@@ -35,7 +43,7 @@
             { x => x.Notifications, _receivedMessages },
         };
 
-        await DialogService.ShowAsync<PostDialog>("", parameters, _dialogOptions);
+        await DialogService.ShowAsync<NotificationDialog>("", parameters, _dialogOptions);
     }
 
     private async Task Clear()
@@ -47,8 +55,11 @@
 
     private async Task StartProcessing()
     {
+        Console.WriteLine("Stated Processing");
+
         if (!await LocalStorage.ContainKeyAsync("user"))
         {
+            Console.WriteLine("user isn't in local storage");
             return;
         }
 
@@ -56,6 +67,13 @@
 
         if (_currentUser == null)
         {
+            Console.WriteLine("user is null");
+            return;
+        }
+
+        if (_client != null)
+        {
+            Console.WriteLine("ServiceBusClient is already initialized");
             return;
         }
 
@@ -63,10 +81,13 @@
         {
             TransportType = ServiceBusTransportType.AmqpWebSockets
         };
-        _client = new ServiceBusClient(DontCommit.TopicKey, clientOptions);
-        _processor = _client.CreateProcessor("testtopic", _currentUser.Email.Replace("@", "__"), new ServiceBusProcessorOptions());
+        _client = new ServiceBusClient(TopicService.TopicKey, clientOptions);
+        _processor = _client.CreateProcessor(TopicService.TopicName, _currentUser.Email.Replace("@", "__"), new ServiceBusProcessorOptions());
         _processor.ProcessMessageAsync += ProcessMessages;
         _processor.ProcessErrorAsync += ErrorHandler;
+
+        Console.WriteLine($"STARTED listening to: {_currentUser.Email.Replace("@", "__")}");
+
         await _processor.StartProcessingAsync();
     }
 
@@ -74,16 +95,23 @@
     {
         var body = args.Message.Body.ToString();
 
-        if (_currentUser != null && body.Contains(_currentUser.UserName))
+        Console.WriteLine($"Got: {body}");
+
+        if (_currentUser != null && body.Contains(_currentUser.Email))
         {
+            await args.CompleteMessageAsync(args.Message);
             return;
         }
 
-        _receivedMessages.Add(body);
-        AreNotifications = true;
-        StateHasChanged();
-
         await args.CompleteMessageAsync(args.Message);
+
+        if (!_receivedMessages.Contains(body))
+        {
+            _receivedMessages.Add(body);
+        }
+
+        AreNotifications = _receivedMessages.Count > 0;
+        StateHasChanged();
     }
 
     private Task ErrorHandler(ProcessErrorEventArgs args)

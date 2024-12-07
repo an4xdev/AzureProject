@@ -1,0 +1,8 @@
+﻿.comments-container {
+    max-height: 575px;
+    overflow-y: auto;
+    padding-left: 8px;
+    padding-bottom: 8px;
+    box-sizing: border-box;
+    margin-left: 10px;
+}
