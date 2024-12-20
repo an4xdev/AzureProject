@@ -22,32 +22,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3f7ced9-e2a5-4d68-bd66-a7ad5339ed6f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Project.Client/Models/PassPostToEdit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Project.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Project.API.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Project.API.csproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Project.API.csproj.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/EmoteService/EmoteService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/EmoteService/EmoteService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/FileService/AzureFileService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/FileService/AzureFileService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/PostService/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/PostService/PostService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/Topic/TopicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/Topic/TopicService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/Services/Utils/SimpleHasher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/Services/Utils/SimpleHasher.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Project.API/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Components/LoggedMenuComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/LoggedMenuComponent.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Components/Notifications.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/Notifications.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Components/SimplePostComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Components/SimplePostComponent.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Dialogs/NotificationDialog.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Dialogs/NotificationDialog.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Layout/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Layout/NavMenu.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Form.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Form.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Home.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Home.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Login.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Login.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Pages/Profile.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Pages/Profile.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Project.Client.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Project.Client.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Client/Project.Client.csproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Client/Project.Client.csproj.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.Shared/Requests/PostRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project.Shared/Requests/PostRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Project.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,25 +55,16 @@
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Properties/launchSettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/EmoteService/EmoteService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/EmoteService/EmoteService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/FileService/AzureFileService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/FileService/AzureFileService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/PostService/PostService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/PostService/PostService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/Topic/TopicService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/Utils/SimpleHasher.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/Services/Utils/SimpleHasher.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/LoggedMenuComponent.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/appsettings.Development.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.API/appsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/LoggedMenuComponent.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/Notifications.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/Notifications.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/SimplePostComponent.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Components/SimplePostComponent.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Dialogs/NotificationDialog.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Dialogs/NotificationDialog.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Layout/NavMenu.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Layout/NavMenu.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Pages/Form.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Pages/Form.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Pages/Home.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/PROGRAMOWANIE/CHMURA/Project/Project.Client/Pages/Login.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -484,6 +452,7 @@
       <workItem from="1734537944345" duration="12399000" />
       <workItem from="1734608698212" duration="1700000" />
       <workItem from="1734714160385" duration="109000" />
+      <workItem from="1734714291474" duration="2826000" />
     </task>
     <task id="LOCAL-00001" summary="project skeleton with cors">
       <option name="closed" value="true" />
@@ -589,7 +558,23 @@
       <option name="project" value="LOCAL" />
       <updated>1733600235097</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="implemented editing post, clearing logs from testing">
+      <option name="closed" value="true" />
+      <created>1734714739493</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1734714739493</updated>
+    </task>
+    <task id="LOCAL-00015" summary="added previously not commited env file">
+      <option name="closed" value="true" />
+      <created>1734714785251</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1734714785251</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -612,7 +597,9 @@
     <MESSAGE value="Lots of work." />
     <MESSAGE value="removed CurrentUser, modified API error messages, tested toggling emotes, fixes modals to add comment and toggle emote when user isn't logged" />
     <MESSAGE value="added env variables where I can, work on notifications" />
-    <option name="LAST_COMMIT_MESSAGE" value="added env variables where I can, work on notifications" />
+    <MESSAGE value="implemented editing post, clearing logs from testing" />
+    <MESSAGE value="added previously not commited env file" />
+    <option name="LAST_COMMIT_MESSAGE" value="added previously not commited env file" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
