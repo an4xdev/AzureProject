@@ -41,7 +41,11 @@ public class AzureFileService : IFileService
 
     public async Task Delete(string filePath)
     {
-        var blobClient = new BlobClient(new Uri(filePath));
+        BlobServiceClient blobServiceClient = new(_storageKey);
+
+        var containerClient = blobServiceClient.GetBlobContainerClient("test");
+
+        var blobClient = containerClient.GetBlobClient(filePath.Split("/").ToList().LastOrDefault());
 
         await blobClient.DeleteIfExistsAsync();
     }

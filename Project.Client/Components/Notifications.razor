@@ -26,27 +26,23 @@
     {
         if (firstRender)
         {
-            Console.WriteLine("OnAfterRender");
             EventAggregator.Subscribe("logged", StartProcessing);
-            // TODO: remove event and give callback to dialog
-            EventAggregator.Subscribe("NotifCleared", Clear);
-            Console.WriteLine("Subscribed to events");
             await StartProcessing();
         }
     }
-
 
     private async Task ShowDialog()
     {
         var parameters = new DialogParameters<NotificationDialog>
         {
             { x => x.Notifications, _receivedMessages },
+            {x => x.OnClear, Clear}
         };
 
         await DialogService.ShowAsync<NotificationDialog>("", parameters, _dialogOptions);
     }
 
-    private async Task Clear()
+    private void Clear()
     {
         _receivedMessages.Clear();
         AreNotifications = false;
@@ -55,11 +51,9 @@
 
     private async Task StartProcessing()
     {
-        Console.WriteLine("Stated Processing");
 
         if (!await LocalStorage.ContainKeyAsync("user"))
         {
-            Console.WriteLine("user isn't in local storage");
             return;
         }
 
@@ -67,13 +61,11 @@
 
         if (_currentUser == null)
         {
-            Console.WriteLine("user is null");
             return;
         }
 
         if (_client != null)
         {
-            Console.WriteLine("ServiceBusClient is already initialized");
             return;
         }
 
@@ -86,16 +78,12 @@
         _processor.ProcessMessageAsync += ProcessMessages;
         _processor.ProcessErrorAsync += ErrorHandler;
 
-        Console.WriteLine($"STARTED listening to: {_currentUser.Email.Replace("@", "__")}");
-
         await _processor.StartProcessingAsync();
     }
 
     private async Task ProcessMessages(ProcessMessageEventArgs args)
     {
         var body = args.Message.Body.ToString();
-
-        Console.WriteLine($"Got: {body}");
 
         if (_currentUser != null && body.Contains(_currentUser.Email))
         {
@@ -116,8 +104,6 @@
 
     private Task ErrorHandler(ProcessErrorEventArgs args)
     {
-        Console.WriteLine($"Error source: {args.Exception.Source}, Exception: {args.Exception.Message}");
-
         Snackbar.Add("Some error occured in notification receive task.", Severity.Error);
 
         return Task.CompletedTask;

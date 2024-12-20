@@ -1,5 +1,4 @@
-﻿@inject EventAggregator EventAggregator
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         <MudButton StartIcon="@Icons.Material.Filled.Delete" OnClick="Clear" Color="Color.Error">Clear notifications</MudButton>
         @foreach (var notification in Notifications)
@@ -16,10 +15,13 @@
     [Parameter]
     public List<string> Notifications { get; set; }
 
+    [Parameter]
+    public Action OnClear { get; set; }
+
     private void Clear()
     {
-        // TODO: use callback and close dialog
         Notifications.Clear();
-        EventAggregator.Publish("NotifCleared");
+        OnClear.Invoke();
+        MudDialog.Close();
     }
 }

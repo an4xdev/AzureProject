@@ -51,8 +51,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var task = await LocalStorage.GetItemAsync<CurrentUser>("user");
-        _posts = await Http.GetFromJsonAsync<List<SimplePostDto>>($"/post/{task.UserId}");
+        var user = await LocalStorage.GetItemAsync<CurrentUser>("user");
+        _posts = await Http.GetFromJsonAsync<List<SimplePostDto>>($"/post/{user.UserId}");
         _loading = false;
     }
 
@@ -63,5 +63,7 @@
         _posts?.Remove(itemToRemove);
         StateHasChanged();
     }
+
+
 
 }

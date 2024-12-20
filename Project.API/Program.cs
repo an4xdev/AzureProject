@@ -19,22 +19,22 @@ var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING"
 
 builder.Services.AddSqlServer<AppDbContext>(connectionString);
 
+var frontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL") ?? "http://localhost";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("BlazorClientPolicy", build =>
-        build.AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-    );
+    options.AddPolicy("FrontendAppPolicy",
+        policy =>
+        {
+            policy
+                .WithOrigins(frontendUrl)
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
 });
 
-builder.Services.AddHttpsRedirection(options =>
-{
-    options.HttpsPort = null;
-});
 
 builder.Services.AddScoped<ITopicService, TopicService>();
-builder.Services.AddScoped<IFileService, LocalFileService>();
+builder.Services.AddScoped<IFileService, AzureFileService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
@@ -48,24 +48,27 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("BlazorClientPolicy");
+app.UseCors("FrontendAppPolicy");
 
-// app.UseHttpsRedirection();
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.Headers.Append("Access-Control-Allow-Origin", frontendUrl);
+        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        context.Response.StatusCode = 200;
+        return;
+    }
+    await next.Invoke();
+});
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
-//
-//     var context = services.GetRequiredService<AppDbContext>();
-//     if (context.Database.GetPendingMigrations().Any())
-//     {
-//         context.Database.Migrate();
-//     }
-// }
 
 // USER
 app.MapPost("/user/login", async ([FromServices] IUserService userService, [FromBody] LoginRequest request) =>
@@ -105,7 +108,7 @@ app.MapPut("/post", async ([FromServices] IPostService postService, [FromBody] P
     return Results.Ok(response);
 });
 
-app.MapDelete("/post", async ([FromServices] IPostService postService, [FromBody] DeletePostRequest request) =>
+app.MapPut("/post/delete", async ([FromServices] IPostService postService, [FromBody] DeletePostRequest request) =>
 {
     var response = await postService.DeletePost(request);
     return Results.Ok(response);

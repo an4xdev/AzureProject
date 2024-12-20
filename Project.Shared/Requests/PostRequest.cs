@@ -11,4 +11,6 @@ public class PostRequest
     public string PhotoExtension { get; set; }
 
     public Guid UserId { get; set; }
+
+    public bool IsPhotoChanged { get; set; }
 }

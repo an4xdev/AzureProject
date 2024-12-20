@@ -25,14 +25,16 @@
         {
             foreach (var postDto in _posts)
             {
-                <Post PostDto="postDto" ShowMore="true"/>
+                <div class="my-3">
+                    <Post PostDto="postDto" ShowMore="true"/>
+                </div>
             }
         }
     }
 </MudContainer>
 
 @code {
-    private List<PostDto>? _posts = null;
+    private List<PostDto>? _posts;
 
     protected override async Task OnInitializedAsync()
     {

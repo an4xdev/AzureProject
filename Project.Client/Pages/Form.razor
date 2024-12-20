@@ -1,14 +1,18 @@
-﻿@page "/Form"
+﻿@page "/Form/{id:guid?}"
 
 <CheckLogged/>
 
 @inject HttpClient Http
 @inject ILocalStorageService LocalStorage
 @inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
 
-<PageTitle>Add new post</PageTitle>
+<PageTitle>@(!Id.HasValue ? "Add new post" : "Edit post")</PageTitle>
 
 @* got from: https://www.mudblazor.com/components/fileupload#custom-scenario *@
+<div class="text-center mt-3">
+    <MudText Typo="Typo.h5">@(!Id.HasValue ? "Add new post" : "Edit post")</MudText>
+</div>
 
 <MudContainer>
     <MudTextField @bind-Value="_request.Description" Label="Description" T="string"
@@ -58,12 +62,15 @@
             </MudButton>
         </MudToolBar>
     </MudStack>
-    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SendPost">Add</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SendPost">
+        @(!Id.HasValue ? "Add" : "Edit")
+    </MudButton>
 </MudContainer>
 
 @code {
 
-    // TODO: EDIT POST
+    [Parameter]
+    public Guid? Id { get; set; }
 
     private readonly PostRequest _request = new();
 
@@ -74,9 +81,20 @@
 
     private CurrentUser _currentUser;
 
+    private bool _isPhotoChanged;
+
+    private PassPostToEdit pass;
+
     protected override async Task OnInitializedAsync()
     {
         _currentUser = await LocalStorage.GetItemAsync<CurrentUser>("user");
+        if (Id.HasValue && await LocalStorage.ContainKeyAsync("pass"))
+        {
+            pass = await LocalStorage.GetItemAsync<PassPostToEdit>("pass");
+            await LocalStorage.RemoveItemAsync("pass");
+            _fileName = pass.PhotoName;
+            _request.Description = pass.Description ?? string.Empty;
+        }
     }
 
     private async Task SendPost()
@@ -89,17 +107,39 @@
 
         _request.UserId = _currentUser.UserId;
 
-
-        var responseMessage = await Http.PostAsJsonAsync($"/post", _request);
-        var content = await responseMessage.Content.ReadFromJsonAsync<BaseResponse>();
-
-        if (!content!.IsSuccessful)
+        if (!Id.HasValue)
         {
-            Snackbar.Add(content.Message, Severity.Error);
-            return;
+            _request.IsPhotoChanged = false;
+            var responseMessage = await Http.PostAsJsonAsync("/post", _request);
+            var content = await responseMessage.Content.ReadFromJsonAsync<BaseResponse>();
+
+            if (!content!.IsSuccessful)
+            {
+                Snackbar.Add(content.Message, Severity.Error);
+                return;
+            }
+
+            Snackbar.Add("Successfully added new post", Severity.Success);
+
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            _request.Id = Id;
+            _request.IsPhotoChanged = _isPhotoChanged;
+
+            var responseMessage = await Http.PutAsJsonAsync("/post", _request);
+            var content = await responseMessage.Content.ReadFromJsonAsync<BaseResponse>();
+
+            if (!content!.IsSuccessful)
+            {
+                Snackbar.Add(content.Message, Severity.Error);
+                return;
+            }
+
+            Snackbar.Add("Successfully edited post", Severity.Success);
         }
 
-        Snackbar.Add("Successfully added new post", Severity.Success);
     }
 
     private async Task ClearAsync()
@@ -134,6 +174,8 @@
         _request.PhotoData = base64String;
 
         Console.WriteLine(base64String);
+
+        _isPhotoChanged = true;
     }
 
     private void SetDragClass() => _dragClass = $"{DefaultDragClass} mud-border-primary";

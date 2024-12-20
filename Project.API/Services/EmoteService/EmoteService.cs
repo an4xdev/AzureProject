@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.API.Database;
 using Project.API.Models;
-using Project.API.Services.Topic;
 using Project.Shared.DTOs;
 using Project.Shared.Requests;
 using Project.Shared.Responses;
@@ -15,7 +14,7 @@ public interface IEmoteService
     public Task<List<EmoteDto>> GetEmotesByPostId(Guid postId);
 }
 
-public class EmoteService(AppDbContext context, ITopicService topicService) :IEmoteService
+public class EmoteService(AppDbContext context) :IEmoteService
 {
     public async Task<BaseResponse> AddEmote(ToggleEmoteToPostRequest request)
     {
@@ -57,9 +56,6 @@ public class EmoteService(AppDbContext context, ITopicService topicService) :IEm
         await context.PostEmotes.AddAsync(postEmote);
 
         await context.SaveChangesAsync();
-
-        await topicService.SendMessage($"{user.Email} added emote!!!!");
-
         response.IsSuccessful = true;
 
         return await Task.FromResult(response);

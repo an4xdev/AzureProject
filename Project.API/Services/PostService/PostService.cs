@@ -102,7 +102,7 @@ public class PostService(
 
         response.IsSuccessful = true;
 
-        await topicService.SendMessage($"{user.Name} just added new image. You must check it now!!!");
+        await topicService.SendMessage($"{user.Email} just added new image. You must check it now!!!");
 
         return await Task.FromResult(response);
     }
@@ -144,7 +144,10 @@ public class PostService(
 
         post.Description = request.Description;
 
-        await fileService.Replace("", request.PhotoData);
+        if (request.IsPhotoChanged)
+        {
+            await fileService.Replace(post.PhotoPath.Split("/").ToList().LastOrDefault(), request.PhotoData);
+        }
 
         context.Posts.Update(post);
 

@@ -2,5 +2,6 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ActiveDebugProfile>Container (Dockerfile)</ActiveDebugProfile>
+    <NameOfLastUsedPublishProfile>D:\PROGRAMOWANIE\CHMURA\Project\Project.API\Properties\PublishProfiles\oddanie.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

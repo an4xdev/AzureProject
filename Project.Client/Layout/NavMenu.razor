@@ -4,6 +4,9 @@
 <MudButton ButtonType="ButtonType.Button" Href="/" Variant="Variant.Filled" Color="Color.Secondary">Home</MudButton>
 <MudSpacer />
 <div class="align-items-center d-flex">
+    <div class="ms-4 me-4">
+        <ChangeThemeComponent/>
+    </div>
     @if (IsLogged)
     {
         <LoggedMenuComponent/>
